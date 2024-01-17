@@ -33,7 +33,8 @@ export class UserController {
         if (token === null) {
             return res.status(403).json({message: "access denied"});
         }
-        
-        return res.json({message: "Successfully login done."});
+
+        res.set('Authorization', `Bearer ${token}`);
+        return res.json({message: "Login successful!"});
     }
 }
