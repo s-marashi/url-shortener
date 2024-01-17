@@ -25,6 +25,8 @@ export class UserApplication {
             return null;
         }
 
+        console.log(user.getId());
+
         const passwordMatch = await user.checkPassword(password);
         if (!passwordMatch) {
             return null;
