@@ -1,5 +1,6 @@
 export const TYPES = {
     RequestValidator: Symbol('RequestValidator'),
+    TokenValidator: Symbol('TokenValidator'),
 
     Db: Symbol('Db'),
 

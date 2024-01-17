@@ -1,17 +1,19 @@
 import { injectable } from "inversify";
 import { BaseMiddleware } from "inversify-express-utils";
-import { validationResult } from "express-validator";
 import { NextFunction, Request, Response } from "express";
+import { AuthenticatedRequest } from "../customRequest/AuthenticatedRequest";
+import { Jwt } from "../jwt/Jwt";
 
 @injectable()
 export class TokenValidator extends BaseMiddleware {
 
-    public handler(req: Request, res: Response, next: NextFunction) {
-        const validationErrors = validationResult(req);
+    public handler(req: AuthenticatedRequest, res: Response, next: NextFunction) {
 
-        if (!validationErrors.isEmpty()) {
-            return res.status(422).send({ errors: validationErrors.array() });
+        const jwt = Jwt.verify(req.header('Authorization'));
+        if (jwt === null) {
+            return res.status(403).send({ errors: "access denied." });
         }
+        req.jwt = jwt;
 
         next();
     }

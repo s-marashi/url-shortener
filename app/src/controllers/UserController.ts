@@ -4,6 +4,7 @@ import { inject } from "inversify";
 import { UserApplication } from "../application/UserApplication";
 import { TYPES } from "../TYPES";
 import { body } from "express-validator";
+import { Jwt } from "./jwt/Jwt";
 
 @controller("/auth")
 export class UserController {
@@ -29,12 +30,13 @@ export class UserController {
         TYPES.RequestValidator
     )
     async login(@request() req: Request, @response() res: Response) {
-        const token = await this.userApplication.authenticate(req.body.email, req.body.password);
-        if (token === null) {
+        const user = await this.userApplication.authenticate(req.body.email, req.body.password);
+        if (user === null) {
             return res.status(403).json({message: "access denied"});
         }
 
-        res.set('Authorization', `Bearer ${token}`);
+        const token = Jwt.generate(user.getEmail(), 7);
+        res.set('Authorization', token);
         return res.json({message: "Login successful!"});
     }
 }

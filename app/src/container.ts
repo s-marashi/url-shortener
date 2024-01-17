@@ -8,6 +8,7 @@ import { createMongodbConnection } from "./infrastructure/db/mongoDb";
 import { UserDataMapper } from "./infrastructure/user/UserDataMapper";
 import { UserApplication } from "./application/UserApplication";
 import { RequestValidator } from "./controllers/middleware/RequestValidator";
+import { TokenValidator } from "./controllers/middleware/TokenValidator";
 
 export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bind) => {
     // Mongodb
@@ -16,6 +17,7 @@ export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bi
 
     // Middleware
     bind<RequestValidator>(TYPES.RequestValidator).to(RequestValidator);
+    bind<TokenValidator>(TYPES.TokenValidator).to(TokenValidator);
     
     // User
     bind<UserApplication>(TYPES.UserApplication).to(UserApplication);

@@ -5,6 +5,7 @@ import { UserRepository } from "../domain/user/UserRepository";
 import { Email } from "../domain/Email";
 import * as JWT from "jsonwebtoken";
 import { config } from "../config/main";
+import { Jwt } from "../controllers/jwt/Jwt";
 
 @injectable()
 export class UserApplication {
@@ -18,7 +19,7 @@ export class UserApplication {
         this.userRepository.save(user);
     }
 
-    async authenticate(email: string, password: string): Promise<string | null> {
+    async authenticate(email: string, password: string): Promise<User | null> {
         const user: User | null = await this.userRepository.findOneByEmail(new Email(email));
         if (user === null) {
             return null;
@@ -29,6 +30,6 @@ export class UserApplication {
             return null;
         }
 
-        return JWT.sign({email: email}, config.JWT_SECRET, {expiresIn: '7 days'});
+        return user;
     }
 }
