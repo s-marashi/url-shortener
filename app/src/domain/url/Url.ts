@@ -6,5 +6,9 @@ export class Url {
         private lastVisitedAt: Date,
         private visitCount: number,
         private userGuid: string,
-    ) {}
+    ) { }
+
+    getShort(): string {
+        return this.short;
+    }
 }

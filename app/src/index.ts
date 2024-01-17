@@ -4,6 +4,7 @@ import { Application as ExpressApplication, json } from "express";
 import { asyncContainer } from "./container";
 import { Container } from "inversify";
 import './controllers/UserController';
+import './controllers/UrlController';
 
 (async () => {
   const container = new Container();

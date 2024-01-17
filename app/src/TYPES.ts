@@ -7,4 +7,8 @@ export const TYPES = {
     UserApplication: Symbol('UserApplication'),
     UserRepository: Symbol('UserRepository'),
     UserDataMapper: Symbol('UserDataMapper'),
+
+    UrlApplication: Symbol('UrlApplication'),
+    UrlRepository: Symbol('UrlRepository'),
+    UrlDataMapper: Symbol('UrlDataMapper'),
 }

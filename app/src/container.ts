@@ -9,6 +9,11 @@ import { UserDataMapper } from "./infrastructure/user/UserDataMapper";
 import { UserApplication } from "./application/UserApplication";
 import { RequestValidator } from "./controllers/middleware/RequestValidator";
 import { TokenValidator } from "./controllers/middleware/TokenValidator";
+import { UrlApplication } from "./application/UrlApplication";
+import { UrlRepository } from "./domain/url/UrlRepository";
+import { MongoUrlRepository } from "./infrastructure/url/MongoUrlRepository";
+import { UrlDataMapper } from "./infrastructure/url/UrlDataMapper";
+
 
 export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bind) => {
     // Mongodb
@@ -21,6 +26,11 @@ export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bi
     
     // User
     bind<UserApplication>(TYPES.UserApplication).to(UserApplication);
-    bind<UserRepository>(TYPES.UserRepository).to(MongoUserRepository)
+    bind<UserRepository>(TYPES.UserRepository).to(MongoUserRepository);
     bind<UserDataMapper>(TYPES.UserDataMapper).to(UserDataMapper);
+
+    // Url
+    bind<UrlApplication>(TYPES.UrlApplication).to(UrlApplication);
+    bind<UrlRepository>(TYPES.UrlRepository).to(MongoUrlRepository);
+    bind<UrlDataMapper>(TYPES.UrlDataMapper).to(UrlDataMapper);
 });
