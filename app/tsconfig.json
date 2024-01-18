@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "Node16",
     "noImplicitAny": false,
     "noUnusedLocals": false,
     "removeComments": true,
@@ -8,7 +8,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "useUnknownInCatchVariables": false,
-    "target": "ES2021",
+    "lib": ["ES2022"],
+    "target": "ES2022",    
     "sourceMap": true,
     "allowJs": false,
     "outDir": "dist",
