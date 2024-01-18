@@ -25,6 +25,10 @@ export class User {
         return this.urls.length < User.LIMIT_URL_PER_USER;
     }
 
+    addUrl(urlId: string) {
+        this.urls.push(urlId);
+    }
+
     getId(): string {
         return this.id;
     }

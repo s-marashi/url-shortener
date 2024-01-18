@@ -8,20 +8,32 @@ import { ObjectId } from "mongodb";
 export class UserDataMapper implements DataMapper<User>
 {
     toDomain(dalEntity: any): User {
-        return new User(
+        let urlIds = [];
+        for (const urlObjectId of dalEntity.urls) {
+            urlIds.push(urlObjectId.toString());
+        }
+
+        const user = new User(
             new Email(dalEntity.displayEmail),
             dalEntity.password,
-            dalEntity.urls,
+            urlIds,
             dalEntity._id.toString(),
         );
+
+        return user;
     }
 
     toDalEntity(user: User): any {
+        let urlObjectIds = [];
+        for(const id of user.getUrls()) {
+            urlObjectIds.push(ObjectId.createFromHexString(id));
+        }
+
         const dal = {
             normalizedEmail: user.getEmail().getNormalized(),
             displayEmail: user.getEmail().getDisplay(),
             password: user.getPassword(),
-            urls: user.getUrls(),
+            urls: urlObjectIds,
         };
 
         if (user.getId() !== "") {
