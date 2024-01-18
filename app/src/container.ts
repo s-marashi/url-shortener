@@ -25,12 +25,12 @@ export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bi
     bind<TokenValidator>(TYPES.TokenValidator).to(TokenValidator);
     
     // User
-    bind<UserApplication>(TYPES.UserApplication).to(UserApplication);
-    bind<UserRepository>(TYPES.UserRepository).to(MongoUserRepository);
-    bind<UserDataMapper>(TYPES.UserDataMapper).to(UserDataMapper);
+    bind<UserApplication>(TYPES.UserApplication).to(UserApplication).inSingletonScope();
+    bind<UserRepository>(TYPES.UserRepository).to(MongoUserRepository).inSingletonScope();
+    bind<UserDataMapper>(TYPES.UserDataMapper).to(UserDataMapper).inSingletonScope();
 
     // Url
-    bind<UrlApplication>(TYPES.UrlApplication).to(UrlApplication);
-    bind<UrlRepository>(TYPES.UrlRepository).to(MongoUrlRepository);
-    bind<UrlDataMapper>(TYPES.UrlDataMapper).to(UrlDataMapper);
+    bind<UrlApplication>(TYPES.UrlApplication).to(UrlApplication).inSingletonScope();
+    bind<UrlRepository>(TYPES.UrlRepository).to(MongoUrlRepository).inSingletonScope();
+    bind<UrlDataMapper>(TYPES.UrlDataMapper).to(UrlDataMapper).inSingletonScope();
 });

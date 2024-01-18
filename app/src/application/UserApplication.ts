@@ -3,9 +3,6 @@ import { User } from "../domain/user/User";
 import { TYPES } from "../TYPES";
 import { UserRepository } from "../domain/user/UserRepository";
 import { Email } from "../domain/Email";
-import * as JWT from "jsonwebtoken";
-import { config } from "../config/main";
-import { Jwt } from "../controllers/jwt/Jwt";
 
 @injectable()
 export class UserApplication {
@@ -33,8 +30,6 @@ export class UserApplication {
         if (user === null) {
             return null;
         }
-
-        console.log(user.getId());
 
         const passwordMatch = await user.checkPassword(password);
         if (!passwordMatch) {
