@@ -3,7 +3,7 @@ import { UserRepository } from "../../domain/user/UserRepository";
 import { User } from "../../domain/user/User";
 import { TYPES } from "../../TYPES";
 import { Collection, Db } from "mongodb";
-import { UserDataMapper } from "../../infrastructure/user/UserDataMapper";
+import { UserDataMapper } from "./UserDataMapper";
 import { Email } from "../../domain/Email";
 
 export @injectable()

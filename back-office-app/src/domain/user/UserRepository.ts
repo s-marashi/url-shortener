@@ -1,5 +1,5 @@
 import { Email } from "../Email";
-import { User } from "../../domain/user/User";
+import { User } from "./User";
 
 export interface UserRepository {
     doesExists(email: Email): Promise<boolean>;

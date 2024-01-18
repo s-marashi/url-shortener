@@ -1,12 +1,12 @@
 version: "3"
 
 services:
-  api:
+  back-office-app:
     build:
-      context: ./
+      context: ./back-office-app/
       target: development
     volumes:
-      - ./:/usr/src/app
+      - ./back-office-app/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 4000:4000
@@ -22,7 +22,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./data:/data/db
+      - ./data/mongo-data:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
