@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { DataMapper } from "../../domain/DataMapper";
+import { DataMapper } from "../DataMapper";
 import { User } from "../../domain/user/User";
 import { Email } from "../../domain/Email";
 import { ObjectId } from "mongodb";

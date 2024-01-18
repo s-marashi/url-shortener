@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import { BaseMiddleware } from "inversify-express-utils";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { AuthenticatedRequest } from "../customRequest/AuthenticatedRequest";
 import { Jwt } from "../jwt/Jwt";
 
