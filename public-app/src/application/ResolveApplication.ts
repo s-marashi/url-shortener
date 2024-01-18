@@ -15,7 +15,7 @@ export class ResolveApplication {
         private readonly statisticsApplication: StatisticsApplication,
     ) { }
 
-    async resolveIt(short: string, queryParams: string[]): Promise<string | null> {        
+    async resolveIt(short: string, queryParams: any): Promise<string | null> {
         let resolve: Resolve = await this.resolveCache.get(short);
         if (resolve !== null) {
             this.statisticsApplication.send(resolve);
@@ -33,16 +33,14 @@ export class ResolveApplication {
         return this.makeResolvedUrl(resolve, queryParams);
     }
 
-    private makeResolvedUrl(resolve: Resolve, params: string[]): string {
+    private makeResolvedUrl(resolve: Resolve, params: any): string {
+        const baseUrl: URL = new URL(resolve.long);
+        const requestParams = new URLSearchParams(params);
 
-        const baseUrl = new URL(resolve.long);
-
-        for (const key in params) {
-            if (Object.prototype.hasOwnProperty.call(params, key)) {
-                const value = params[key];
-                baseUrl.searchParams.set(key, value);
-            }
+        for (const [key, value] of requestParams.entries()) {
+            baseUrl.searchParams.append(key, value);
         }
+        console.log(baseUrl.searchParams.toString());
 
         return baseUrl.href;
     }

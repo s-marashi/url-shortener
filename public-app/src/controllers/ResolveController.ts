@@ -16,7 +16,7 @@ export class ResolveController {
     )
     async resolve(
         @requestParam("short") short: string,
-        @queryParam() queryParams: string[],
+        @queryParam() queryParams: any,
         @response() res: Response
     ) {
         const resolvedUrl: string | null = await this.resolveApplication.resolveIt(short, queryParams);
