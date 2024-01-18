@@ -3,7 +3,7 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import { Application as ExpressApplication, json } from "express";
 import { asyncContainer } from "./container";
 import { Container } from "inversify";
-import './controllers/UrlResolveController';
+import './controllers/ResolveController';
 
 (async () => {
   const container = new Container();

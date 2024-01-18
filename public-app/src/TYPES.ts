@@ -3,10 +3,12 @@ export const TYPES = {
 
     Db: Symbol('Db'),
 
-    UrlResolveController: Symbol('UrlResolveController'),
-    UrlResolveApplication: Symbol('UrlResolveApplication'),
-    UrlResolveCache: Symbol('UrlResolveCache'),
-    UrlResolveDb: Symbol('UrlResolveDb'),
+    ResolveController: Symbol('ResolveController'),
+    ResolveApplication: Symbol('ResolveApplication'),
+    ResolveCache: Symbol('ResolveCache'),
+    ResolveDb: Symbol('ResolveDb'),
+    MongoResolveDataMapper: Symbol('DbResolveDataMapper'),
+    RedisResolveDataMapper: Symbol('RedisResolveDataMapper'),
 
     StatisticsApplication: Symbol('StatisticsApplication'),
 }

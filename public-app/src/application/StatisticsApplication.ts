@@ -1,9 +1,9 @@
-import { Url } from "../domain/resolve/Url";
+import { Resolve } from "../domain/resolve/Resolve";
 import { injectable } from "inversify";
 
 @injectable()
 export class StatisticsApplication {
-    async send(url: Url): Promise<void> {
+    async send(resolve: Resolve): Promise<void> {
         return;
     }
 }
