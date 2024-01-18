@@ -22,7 +22,7 @@ export class UrlDataMapper implements DataMapper<Url>
             short: url.getShort(),
             long: url.getLong(),
             lastVisitedAt: url.getLastVisitedAt(),
-            visitCont: url.getVisitCount(),
+            visitCount: url.getVisitCount(),
             userId: ObjectId.createFromHexString(url.getUserId()),
         };
 

@@ -15,9 +15,10 @@ import { MongoUrlRepository } from "./infrastructure/url/MongoUrlRepository";
 import { UrlDataMapper } from "./infrastructure/url/UrlDataMapper";
 import { ShortUrlProvider } from "./domain/url/ShortUrlProvider";
 import { ApiShortUrlProvider } from "./infrastructure/url/ApiShortUrlProvider";
+import { StatisticsDataMapper } from "./infrastructure/statistics/StatistisDataMapper";
 
 
-export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bind) => {
+export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
     // Mongodb
     const db: Db = await createMongodbConnection(config.MONGODB_URI, config.MONGODB_NAME);
     bind<Db>(TYPES.Db).toConstantValue(db);
@@ -25,7 +26,7 @@ export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bi
     // Middleware
     bind<RequestValidator>(TYPES.RequestValidator).to(RequestValidator);
     bind<TokenValidator>(TYPES.TokenValidator).to(TokenValidator);
-    
+
     // User
     bind<UserApplication>(TYPES.UserApplication).to(UserApplication).inSingletonScope();
     bind<UserRepository>(TYPES.UserRepository).to(MongoUserRepository).inSingletonScope();
@@ -36,4 +37,5 @@ export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bi
     bind<UrlRepository>(TYPES.UrlRepository).to(MongoUrlRepository).inSingletonScope();
     bind<UrlDataMapper>(TYPES.UrlDataMapper).to(UrlDataMapper).inSingletonScope();
     bind<ShortUrlProvider>(TYPES.ShortUrlProvider).to(ApiShortUrlProvider).inSingletonScope();
+    bind<StatisticsDataMapper>(TYPES.StatisticsDataMapper).to(StatisticsDataMapper).inSingletonScope();
 });

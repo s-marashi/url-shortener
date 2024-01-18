@@ -4,6 +4,8 @@ import { Collection, Db, ObjectId } from "mongodb";
 import { UrlRepository } from "../../domain/url/UrlRepository";
 import { UrlDataMapper } from "./UrlDataMapper";
 import { Url } from "../../domain/url/Url";
+import { Statistics } from "../../domain/statistics/Statistics";
+import { StatisticsDataMapper } from "../statistics/StatistisDataMapper";
 
 export @injectable()
 class MongoUrlRepository implements UrlRepository {
@@ -11,7 +13,8 @@ class MongoUrlRepository implements UrlRepository {
 
     constructor(
         @inject(TYPES.Db) private readonly db: Db,
-        @inject(TYPES.UrlDataMapper) private readonly dataMapper: UrlDataMapper
+        @inject(TYPES.UrlDataMapper) private readonly dataMapper: UrlDataMapper,
+        @inject(TYPES.StatisticsDataMapper) private readonly statisticsDataMapper: StatisticsDataMapper,
     ) {
         this.collection = db.collection('urls');
         this.setupIndices();
@@ -56,12 +59,22 @@ class MongoUrlRepository implements UrlRepository {
     }
 
     async dropOneById(id: string): Promise<boolean> {
-        const dbResult = await this.collection.deleteOne({_id: ObjectId.createFromHexString(id)});
+        const dbResult = await this.collection.deleteOne({ _id: ObjectId.createFromHexString(id) });
         if (dbResult.deletedCount !== 1) {
             return false;
         }
 
         return true;
+    }
+
+    async getStatisticsByUserId(userId: string): Promise<Statistics[]> {
+        const urls = await this.collection.find({ userId: ObjectId.createFromHexString(userId) }).toArray();
+        const statistics = [];
+        for (const url of urls) {
+            statistics.push(this.statisticsDataMapper.toDomain(url));
+        }
+
+        return statistics;
     }
 
     private async setupIndices(): Promise<void> {

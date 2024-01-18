@@ -6,6 +6,7 @@ import { User } from "../domain/user/User";
 import { UserRepository } from "../domain/user/UserRepository";
 import { UrlRepository } from "../domain/url/UrlRepository";
 import { ShortUrlProvider } from "../domain/url/ShortUrlProvider";
+import { Statistics } from "../domain/statistics/Statistics";
 
 @injectable()
 export class UrlApplication {
@@ -74,5 +75,14 @@ export class UrlApplication {
         await this.userRepository.save(user);
 
         return true;
+    }
+
+    async getStatisticsByEmail(email: Email): Promise<Statistics[]> {
+        const user: User | null = await this.userRepository.findOneByEmail(email);
+        if (user === null) {
+            return null;
+        }
+
+        return await this.urlRepository.getStatisticsByUserId(user.getId());
     }
 }

@@ -7,6 +7,7 @@ import { Email } from "../domain/Email";
 import { Url } from "../domain/url/Url";
 import { UrlApplication } from "../application/UrlApplication";
 import { inject } from "inversify";
+import { Statistics } from "../domain/statistics/Statistics";
 
 @controller("/urls")
 export class UrlController {
@@ -52,8 +53,10 @@ export class UrlController {
         "/",
         TYPES.TokenValidator
     )
-    async list(@request() req: AuthenticatedRequest, @response() res: Response) {
-        console.log(req.jwt.getEmail().toString());
-        return res.json("Authenticated");
+    async statistics(@request() req: AuthenticatedRequest, @response() res: Response) {
+        const email: Email = req.jwt.getEmail();
+        const statistics: Statistics[] = await this.urlApplication.getStatisticsByEmail(email);
+
+        return res.json(statistics);
     }
 }
