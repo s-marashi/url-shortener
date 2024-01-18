@@ -7,7 +7,7 @@ export class Jwt {
 
     public static generate(email: Email, expiresInDay: number) {
         const token =  JWT.sign(
-            { email: email.toString() },
+            { email: email.getDisplay() },
             config.JWT_SECRET,
             { expiresIn: `${expiresInDay} days` }
         );
