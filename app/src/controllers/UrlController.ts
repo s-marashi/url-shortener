@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { controller, httpGet, httpPost, request, response } from "inversify-express-utils";
+import { controller, httpDelete, httpGet, httpPost, request, response } from "inversify-express-utils";
 import { TYPES } from "../TYPES";
 import { AuthenticatedRequest } from "./customRequest/AuthenticatedRequest";
 import { body } from "express-validator";
@@ -31,13 +31,22 @@ export class UrlController {
         return res.json({ short: url.getShort() });
     }
 
-    // @httpDelete(
-    //     "/",
-    //     body("url", "Url is invalid.").notEmpty().isURL(),
-    //     TYPES.RequestValidator
-    // )
-    // async drop(@request() req: Request, @response() res: Response) {
-    // }
+    @httpDelete(
+        "/",
+        TYPES.TokenValidator,
+        body("url", "Url is invalid.").notEmpty().isURL(),
+        TYPES.RequestValidator
+    )
+    async drop(@request() req: AuthenticatedRequest, @response() res: Response) {
+        const email: Email = req.jwt.getEmail();
+        const success: boolean = await this.urlApplication.drop(req.body.url, email);
+
+        if (!success) {
+            return res.status(400).json({ error: "failed to drop" })
+        }
+
+        return res.json({ message: "dropped!!!"});
+    }
 
     @httpGet(
         "/",

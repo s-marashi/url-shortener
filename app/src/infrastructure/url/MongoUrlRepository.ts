@@ -42,6 +42,28 @@ class MongoUrlRepository implements UrlRepository {
         return url;
     }
 
+    async findOneByLongAndUserId(long: string, userId: string): Promise<Url | null> {
+        const dbResult = await this.collection.findOne({
+            userId: ObjectId.createFromHexString(userId),
+            long: long
+        });
+
+        if (dbResult === null) {
+            return null;
+        }
+
+        return this.dataMapper.toDomain(dbResult);
+    }
+
+    async dropOneById(id: string): Promise<boolean> {
+        const dbResult = await this.collection.deleteOne({_id: ObjectId.createFromHexString(id)});
+        if (dbResult.deletedCount !== 1) {
+            return false;
+        }
+
+        return true;
+    }
+
     private async setupIndices(): Promise<void> {
         const indexUserLongUrls = { userId: 1, long: 1 };
         await this.collection.createIndex(indexUserLongUrls, { unique: true });

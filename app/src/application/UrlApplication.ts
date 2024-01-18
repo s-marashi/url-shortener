@@ -23,7 +23,7 @@ export class UrlApplication {
         if (user === null) {
             return null;
         }
-        if (! user.hasFreeCapacity()) {
+        if (!user.hasFreeCapacity()) {
             return null;
         }
 
@@ -35,7 +35,7 @@ export class UrlApplication {
         if (exist) {
             return null;
         }
-        
+
         const short = await this.shortUrlProvider.getShortUrl();
         if (short === null) {
             return null;
@@ -51,5 +51,28 @@ export class UrlApplication {
         this.userRepository.save(user);
 
         return url;
+    }
+
+    async drop(long: string, email: Email): Promise<boolean> {
+        const user: User | null = await this.userRepository.findOneByEmail(email);
+        if (user === null) {
+            return null;
+        }
+
+        const normalizedLong = await Url.normalize(long);
+        if (normalizedLong === null) {
+            return null;
+        }
+        const url = await this.urlRepository.findOneByLongAndUserId(normalizedLong, user.getId());
+        if (url === null) {
+            return false;
+        }
+
+        user.dropUrl(url.getId())
+
+        await this.urlRepository.dropOneById(url.getId());
+        await this.userRepository.save(user);
+
+        return true;
     }
 }

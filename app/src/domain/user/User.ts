@@ -29,6 +29,10 @@ export class User {
         this.urls.push(urlId);
     }
 
+    dropUrl(urlId: string) {
+        this.urls = this.urls.filter((id: string) => id !== urlId)
+    }
+
     getId(): string {
         return this.id;
     }
