@@ -7,4 +7,6 @@ export const TYPES = {
     UrlResolveApplication: Symbol('UrlResolveApplication'),
     UrlResolveCache: Symbol('UrlResolveCache'),
     UrlResolveDb: Symbol('UrlResolveDb'),
+
+    StatisticsApplication: Symbol('StatisticsApplication'),
 }

@@ -7,8 +7,9 @@ import { RequestValidator } from "./controllers/middleware/RequestValidator";
 import { UrlResolveController } from "./controllers/UrlResolveController";
 import { UrlResolveApplication } from "./application/UrlResolveApplication";
 import { RedisUrlResolveRepository } from "./infrastructure/RedisUrlResolveRepository";
-import { UrlResolveRepository } from "./domain/UrlResolveRepository";
+import { UrlResolveRepository } from "./domain/resolve/UrlResolveRepository";
 import { MongoUrlResolveRepository } from "./infrastructure/MongoUrlResolveRepository";
+import { StatisticsApplication } from "./application/StatisticsApplication";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
@@ -23,4 +24,6 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     bind<UrlResolveApplication>(TYPES.UrlResolveApplication).to(UrlResolveApplication).inSingletonScope();
     bind<UrlResolveRepository>(TYPES.UrlResolveCache).to(RedisUrlResolveRepository).inSingletonScope();
     bind<UrlResolveRepository>(TYPES.UrlResolveDb).to(MongoUrlResolveRepository).inSingletonScope();
+
+    bind<StatisticsApplication>(TYPES.StatisticsApplication).to(StatisticsApplication).inSingletonScope();
 });
