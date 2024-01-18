@@ -8,8 +8,12 @@ import { Jwt } from "../jwt/Jwt";
 export class TokenValidator extends BaseMiddleware {
 
     public handler(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+        const header: string | null = req.header('Authorization') as string | null;
+        if (header === undefined) {
+            return res.status(403).send({ errors: "access denied." });
+        }
 
-        const jwt = Jwt.verify(req.header('Authorization'));
+        const jwt = Jwt.verify(header);
         if (jwt === null) {
             return res.status(403).send({ errors: "access denied." });
         }
