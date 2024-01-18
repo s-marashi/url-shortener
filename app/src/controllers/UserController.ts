@@ -19,8 +19,12 @@ export class UserController {
         TYPES.RequestValidator
     )
     async signup(@request() req: Request, @response() res: Response) {
-        await this.userApplication.signUp(req.body.email, req.body.password);
-        return res.json("created");
+        const created: boolean = await this.userApplication.signUp(req.body.email, req.body.password);
+        if (created) {
+            return res.json("created");
+        } else {
+            return res.status(400).json("failed to create");
+        }
     }
 
     @httpPost(

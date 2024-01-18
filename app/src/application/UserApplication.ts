@@ -14,9 +14,18 @@ export class UserApplication {
         private readonly userRepository: UserRepository
     ) { }
 
-    async signUp(email: string, password: string): Promise<void> {
-        const user: User = await User.register(new Email(email), password);
-        this.userRepository.save(user);
+    async signUp(email: string, password: string): Promise<boolean> {
+        const exist : boolean = await this.userRepository.doesExists(new Email(email));
+        if (exist) {
+            return false;
+        }
+        try {
+            const user: User = await User.register(new Email(email), password);
+            this.userRepository.save(user);
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
     async authenticate(email: string, password: string): Promise<User | null> {
