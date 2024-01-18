@@ -80,5 +80,11 @@ class MongoUrlRepository implements UrlRepository {
     private async setupIndices(): Promise<void> {
         const indexUserLongUrls = { userId: 1, long: 1 };
         await this.collection.createIndex(indexUserLongUrls, { unique: true });
+
+        const indexShortUrl = { short: 1 };
+        await this.collection.createIndex(indexShortUrl, { unique: true });
+
+        const indexLastVisitedAt = { lastVisitedAt: 1 };
+        await this.collection.createIndex(indexLastVisitedAt);
     }
 }
