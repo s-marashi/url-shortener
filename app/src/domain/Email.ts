@@ -1,8 +1,10 @@
 export class Email {
-    private email: string;
+    private normalized: string;
+    private display: string;
 
     constructor(email: string) {
-        this.email = this.normalize(email);
+        this.display = email;
+        this.normalized = this.normalize(email);
     }
 
     private PLUS_ONLY = /\+.*$/;
@@ -48,7 +50,11 @@ export class Email {
         return username + '@' + domain;
     }
 
-    toString() {
-        return this.email;
+    getNormalized() {
+        return this.normalized;
+    }
+
+    getDisplay() {
+        return this.display;
     }
 }

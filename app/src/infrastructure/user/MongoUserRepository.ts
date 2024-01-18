@@ -18,7 +18,7 @@ class MongoUserRepository implements UserRepository {
     }
 
     async doesExists(email: Email): Promise<boolean> {
-        const dbResult = await this.collection.findOne({ email: email.toString() });
+        const dbResult = await this.collection.findOne({ normalizedEmail: email.getNormalized() });
         return !!dbResult;
     }
 
@@ -29,11 +29,11 @@ class MongoUserRepository implements UserRepository {
             const dbResult = await this.collection.insertOne(this.dataMapper.toDalEntity(user));
             return;
         }
-        await this.collection.replaceOne({ email: email.toString() }, this.dataMapper.toDalEntity(user));
+        await this.collection.replaceOne({ normalizedEmail: email.getNormalized() }, this.dataMapper.toDalEntity(user));
     }
 
     async findOneByEmail(email: Email): Promise<User | null> {
-        const dbResult = await this.collection.findOne({ email: email.toString() });
+        const dbResult = await this.collection.findOne({ normalizedEmail: email.getNormalized() });
         if (dbResult === null) {
             return null;
         }

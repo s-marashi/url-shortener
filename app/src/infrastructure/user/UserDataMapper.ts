@@ -9,7 +9,7 @@ export class UserDataMapper implements DataMapper<User>
 {
     toDomain(dalEntity: any): User {
         return new User(
-            new Email(dalEntity.email),
+            new Email(dalEntity.displayEmail),
             dalEntity.password,
             dalEntity.urls,
             dalEntity._id.toString(),
@@ -18,9 +18,10 @@ export class UserDataMapper implements DataMapper<User>
 
     toDalEntity(user: User): any {
         const dal = {
-            'email': user.getEmail().toString(),
-            'password': user.getPassword(),
-            'urls': user.getUrls(),
+            normalizedEmail: user.getEmail().getNormalized(),
+            displayEmail: user.getEmail().getDisplay(),
+            password: user.getPassword(),
+            urls: user.getUrls(),
         };
 
         if (user.getId() !== "") {
