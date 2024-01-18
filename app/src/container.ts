@@ -13,6 +13,8 @@ import { UrlApplication } from "./application/UrlApplication";
 import { UrlRepository } from "./domain/url/UrlRepository";
 import { MongoUrlRepository } from "./infrastructure/url/MongoUrlRepository";
 import { UrlDataMapper } from "./infrastructure/url/UrlDataMapper";
+import { ShortUrlProvider } from "./domain/url/ShortUrlProvider";
+import { ApiShortUrlProvider } from "./infrastructure/url/ApiShortUrlProvider";
 
 
 export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bind) => {
@@ -33,4 +35,5 @@ export const asyncContainer = new AsyncContainerModule(async(bind: interfaces.Bi
     bind<UrlApplication>(TYPES.UrlApplication).to(UrlApplication).inSingletonScope();
     bind<UrlRepository>(TYPES.UrlRepository).to(MongoUrlRepository).inSingletonScope();
     bind<UrlDataMapper>(TYPES.UrlDataMapper).to(UrlDataMapper).inSingletonScope();
+    bind<ShortUrlProvider>(TYPES.ShortUrlProvider).to(ApiShortUrlProvider).inSingletonScope();
 });

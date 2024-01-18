@@ -11,4 +11,5 @@ export const TYPES = {
     UrlApplication: Symbol('UrlApplication'),
     UrlRepository: Symbol('UrlRepository'),
     UrlDataMapper: Symbol('UrlDataMapper'),
+    ShortUrlProvider: Symbol('ShortUrlProvider'),
 }
