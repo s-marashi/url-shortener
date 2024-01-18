@@ -16,6 +16,23 @@ services:
     environment:
       - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
       - MONGODB_NAME=url_shortener
+  
+  public-app:
+    build:
+      context: ./public-app/
+      target: development
+    volumes:
+      - ./public-app/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    command: npm run dev
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
+      - MONGODB_NAME=url_shortener
+  
   mongodb:
     image: mongo
     restart: always
