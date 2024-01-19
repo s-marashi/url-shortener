@@ -7,27 +7,18 @@ import { StatisticsApplication } from "./StatisticsApplication";
 @injectable()
 export class ResolveApplication {
     constructor(
-        @inject(TYPES.ResolveCache)
-        private readonly resolveCache: ResolveRepository,
-        @inject(TYPES.ResolveDb)
-        private readonly resolveDb: ResolveRepository,
+        @inject(TYPES.ResolveRepository)
+        private readonly resolveRepository: ResolveRepository,
         @inject(TYPES.StatisticsApplication)
         private readonly statisticsApplication: StatisticsApplication,
     ) { }
 
     async resolveIt(short: string, queryParams: any): Promise<string | null> {
-        let resolve: Resolve = await this.resolveCache.get(short);
-        if (resolve !== null) {
-            this.statisticsApplication.send(resolve);
-            return this.makeResolvedUrl(resolve, queryParams);
-        };
-
-        resolve = await this.resolveDb.get(short);
+        const resolve = await this.resolveRepository.get(short);
         if (resolve === null) {
             return null;
         }
 
-        this.resolveCache.set(resolve);
         this.statisticsApplication.send(resolve);
 
         return this.makeResolvedUrl(resolve, queryParams);

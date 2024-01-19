@@ -8,7 +8,7 @@ export const TYPES = {
     ResolveController: Symbol('ResolveController'),
     ResolveApplication: Symbol('ResolveApplication'),
     ResolveCache: Symbol('ResolveCache'),
-    ResolveDb: Symbol('ResolveDb'),
+    ResolveRepository: Symbol('ResolveRepository'),
     MongoResolveDataMapper: Symbol('DbResolveDataMapper'),
     RedisResolveDataMapper: Symbol('RedisResolveDataMapper'),
 

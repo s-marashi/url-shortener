@@ -2,7 +2,7 @@ import { AsyncContainerModule, interfaces } from "inversify";
 import { TYPES } from "./TYPES";
 import { config } from "./config/main";
 import { Db } from "mongodb";
-import { createMongodbConnection } from "./infrastructure/db/mongoDb";
+import { createMongodbConnection } from "./infrastructure/connectors/mongoDb";
 import { RequestValidator } from "./controllers/middleware/RequestValidator";
 import { ResolveController } from "./controllers/ResolveController";
 import { ResolveApplication } from "./application/ResolveApplication";
@@ -13,9 +13,9 @@ import { StatisticsApplication } from "./application/StatisticsApplication";
 import { MongoResolveDataMapper } from "./infrastructure/resolve/mongo/MongoResolveDataMapper";
 import { RedisResolveDataMapper } from "./infrastructure/resolve/redis/RedisResolveDataMapper";
 import { RedisClientType } from "redis";
-import { createRedisConnection } from "./infrastructure/db/redisConnection";
+import { createRedisConnection } from "./infrastructure/connectors/redisConnection";
 import { Channel } from "amqplib/callback_api";
-import { createRabbitmqConnection } from "./infrastructure/db/rabbitmqConnection";
+import { createRabbitmqConnection } from "./infrastructure/connectors/rabbitmqConnection";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
@@ -54,7 +54,7 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     bind<ResolveRepository>(TYPES.ResolveCache).to(RedisResolveRepository).inSingletonScope();
     bind<RedisResolveDataMapper>(TYPES.RedisResolveDataMapper).to(RedisResolveDataMapper).inSingletonScope();
 
-    bind<ResolveRepository>(TYPES.ResolveDb).to(MongoResolveRepository).inSingletonScope();
+    bind<ResolveRepository>(TYPES.ResolveRepository).to(MongoResolveRepository).inSingletonScope();
     bind<MongoResolveDataMapper>(TYPES.MongoResolveDataMapper).to(MongoResolveDataMapper).inSingletonScope();
 
     bind<StatisticsApplication>(TYPES.StatisticsApplication).to(StatisticsApplication).inSingletonScope();

@@ -12,17 +12,26 @@ export class MongoResolveRepository implements ResolveRepository {
     constructor(
         @inject(TYPES.Db) private readonly db: Db,
         @inject(TYPES.MongoResolveDataMapper) private readonly dataMapper: MongoResolveDataMapper,
+        @inject(TYPES.ResolveCache) private readonly resolveCache: ResolveRepository,
     ) {
         this.collection = db.collection('urls');
     }
 
     async get(short: string): Promise<Resolve | null> {
+        let resolve: Resolve = await this.resolveCache.get(short);
+        if (resolve !== null) {
+            return resolve;
+        };
+
         const dbResult = await this.collection.findOne({ short });
         if (dbResult === null) {
             return null;
         }
 
-        return this.dataMapper.toDomain(dbResult);
+        resolve = this.dataMapper.toDomain(dbResult);
+        this.resolveCache.set(resolve);
+
+        return resolve;
     }
 
     async set(url: Resolve): Promise<void> {
