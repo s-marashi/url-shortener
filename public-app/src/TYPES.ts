@@ -13,4 +13,6 @@ export const TYPES = {
     RedisResolveDataMapper: Symbol('RedisResolveDataMapper'),
 
     StatisticsApplication: Symbol('StatisticsApplication'),
+    StatisticsQueue: Symbol('StatisticsQueue'),
+    StatisticsDataMapper: Symbol('StatisticsDataMapper'),
 }

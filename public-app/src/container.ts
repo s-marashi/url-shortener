@@ -16,6 +16,9 @@ import { RedisClientType } from "redis";
 import { createRedisConnection } from "./infrastructure/connectors/redisConnection";
 import { Channel } from "amqplib/callback_api";
 import { createRabbitmqConnection } from "./infrastructure/connectors/rabbitmqConnection";
+import { StatisticsQueue } from "./domain/statistics/StatisticsQueue";
+import { RabbitmqStatisticsQueue } from "./infrastructure/statistics/RabbitmqStatisticsQueue";
+import { StatisticsDataMapper } from "./infrastructure/statistics/StatisticsDataMapper";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
@@ -58,4 +61,6 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     bind<MongoResolveDataMapper>(TYPES.MongoResolveDataMapper).to(MongoResolveDataMapper).inSingletonScope();
 
     bind<StatisticsApplication>(TYPES.StatisticsApplication).to(StatisticsApplication).inSingletonScope();
+    bind<StatisticsQueue>(TYPES.StatisticsQueue).to(RabbitmqStatisticsQueue).inSingletonScope();
+    bind<StatisticsDataMapper>(TYPES.StatisticsDataMapper).to(StatisticsDataMapper).inSingletonScope();
 });
