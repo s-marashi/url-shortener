@@ -4,7 +4,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../TYPES";
 import { Channel } from "amqplib";
 import { UrlResolvedDataMapper } from "./UrlResolvedDataMapper";
-import { MessageQueueHandler } from "../../domain/MessageQueueHandler";
+import { RequestHandler } from "../../domain/RequestHandler";
 
 @injectable()
 export class RabbitmqUrlResolvedQueue implements UrlResolvedQueue {
@@ -27,7 +27,7 @@ export class RabbitmqUrlResolvedQueue implements UrlResolvedQueue {
         );
     }
 
-    async subscribe(handler: MessageQueueHandler<UrlResolved>): Promise<void> {
+    async subscribe(handler: RequestHandler<UrlResolved>): Promise<void> {
         this.messageQueue.consume(
             this.QueueUrlResolved,
             (message) => {

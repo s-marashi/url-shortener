@@ -3,11 +3,11 @@ import { inject, injectable } from "inversify";
 import { ResolveTrackRepository } from "../domain/resolveTrack/ResolveTrackRepository";
 import { ResolveTrack } from "../domain/resolveTrack/ResolveTrack";
 import { UrlResolved } from "../domain/urlResolved/UrlResolved";
-import { MessageQueueHandler } from "../domain/MessageQueueHandler";
+import { RequestHandler } from "../domain/RequestHandler";
 import { UrlApplication } from "./UrlApplication";
 
 @injectable()
-export class ResolveTrackApplication implements MessageQueueHandler<UrlResolved> {
+export class ResolveTrackApplication implements RequestHandler<UrlResolved> {
     constructor(
         @inject(TYPES.ResolveTrackRepository) private readonly resolveTrackRepository: ResolveTrackRepository,
         @inject(TYPES.UrlApplication) private readonly urlApplication: UrlApplication,
