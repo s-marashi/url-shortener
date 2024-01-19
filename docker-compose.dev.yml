@@ -43,6 +43,28 @@ services:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
   
+  housekeeper-app:
+    build:
+      context: ./housekeeper-app/
+      target: development
+    volumes:
+      - ./housekeeper-app/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 2000:2000
+    command: npm run dev
+    depends_on:
+      - mongodb
+      - rabbitmq
+    environment:
+      - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
+      - MONGODB_NAME=url_shortener
+      # RABBIT VARIABLES
+      - RABBITMQ_USER=user
+      - RABBITMQ_PASSWORD=pass
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672 
+
   mongodb:
     image: mongo
     restart: always
