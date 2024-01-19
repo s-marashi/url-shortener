@@ -71,4 +71,17 @@ class MongoUrlRepository implements UrlRepository {
 
         return this.dataMapper.toDomain(dbResult);
     }
+
+    async findUrlsNotvisitedAfter(threshold: Date, count: number): Promise<Url[]> {
+        const urls: Url[] = [];
+        const cursor = this.collection.find({
+            lastVisitedAt: { $lt: threshold }
+        }).limit(count);
+
+        for await (const dal of cursor) {            
+            urls.push(this.dataMapper.toDomain(dal));
+        }
+
+        return urls;
+    }
 }

@@ -6,4 +6,5 @@ export interface UrlRepository {
     findOneByLongAndUserId(long: string, userId: string): Promise<Url | null>;
     dropOneById(id: string): Promise<boolean>;
     findOneByShort(short: string): Promise<Url | null>;
+    findUrlsNotvisitedAfter(threshold: Date, count: number): Promise<Url[]>
 }

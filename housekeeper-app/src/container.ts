@@ -15,6 +15,10 @@ import { UrlApplication } from "./application/UrlApplication";
 import { UrlRepository } from "./domain/url/UrlRepository";
 import { UrlDataMapper } from "./infrastructure/url/UrlDataMapper";
 import { MongoUrlRepository } from "./infrastructure/url/MongoUrlRepository";
+import { UserRepository } from "./domain/user/UserRepository";
+import { MongoUserRepository } from "./infrastructure/user/MongoUserRepository";
+import { UserDataMapper } from "./infrastructure/user/UserDataMapper";
+import { UnusedUrlCleanupApplication } from "./application/UnusedUrlCleanupApplication";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
@@ -50,4 +54,11 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     bind<UrlApplication>(TYPES.UrlApplication).to(UrlApplication).inSingletonScope();
     bind<UrlRepository>(TYPES.UrlRepository).to(MongoUrlRepository).inSingletonScope();
     bind<UrlDataMapper>(TYPES.UrlDataMapper).to(UrlDataMapper).inSingletonScope();
+
+    // User
+    bind<UserRepository>(TYPES.UserRepository).to(MongoUserRepository).inSingletonScope();
+    bind<UserDataMapper>(TYPES.UserDataMapper).to(UserDataMapper).inSingletonScope();
+
+    // UrlCleanUp
+    bind<UnusedUrlCleanupApplication>(TYPES.UnusedUrlCleanupApplication).to(UnusedUrlCleanupApplication).inSingletonScope();
 });
