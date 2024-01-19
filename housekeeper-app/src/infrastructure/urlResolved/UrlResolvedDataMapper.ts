@@ -6,17 +6,14 @@ import { UrlResolved } from "../../domain/urlResolved/UrlResolved";
 export class UrlResolvedDataMapper implements DataMapper<UrlResolved>
 {
     toDomain(dalEntity: any): UrlResolved {
-        return new UrlResolved(
-            dalEntity.short,
-            dalEntity.timestamp,
-        );
+        return JSON.parse((dalEntity as Buffer).toString()) as UrlResolved;
     }
 
-    toDalEntity(statistics: UrlResolved): any {
+    toDalEntity(urlResolved: UrlResolved): any {
         return Buffer.from(JSON.stringify(
             {
-                short: statistics.short,
-                timestamp: statistics.timestamp,
+                short: urlResolved.short,
+                timestamp: urlResolved.timestamp,
             }
         ));
     }

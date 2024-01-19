@@ -35,8 +35,7 @@ export class RabbitmqUrlResolvedQueue implements UrlResolvedQueue {
                     console.log('Invalid incoming message');
                     return;
                 }
-                console.log(message?.content?.toString());
-                // handleIncomingNotification(message?.content?.toString());
+                handler.consume(this.dataMapper.toDomain(message?.content));
                 this.messageQueue.ack(message);
             },
             {
