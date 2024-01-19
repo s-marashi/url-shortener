@@ -1,6 +1,6 @@
 import { TYPES } from "../TYPES";
 import { inject, injectable } from "inversify";
-import { ResolveTrackRepository } from "@domain/resolveTrack/ResolveTrackRepository";
+import { ResolveTrackRepository } from "../domain/resolveTrack/ResolveTrackRepository";
 import { ResolveTrack } from "../domain/resolveTrack/ResolveTrack";
 import { UrlResolved } from "../domain/urlResolved/UrlResolved";
 import { MessageQueueHandler } from "../domain/MessageQueueHandler";
@@ -18,7 +18,7 @@ export class ResolveTrackApplication implements MessageQueueHandler<UrlResolved>
         } else {
             resolveTrack.updateWithUrlResolved(urlResolved);
         }
-        
+
         if (resolveTrack.getCount() === 10000) {
             // persist it in mongo
             await this.resolveTrackRepository.delete(resolveTrack);
@@ -32,7 +32,7 @@ export class ResolveTrackApplication implements MessageQueueHandler<UrlResolved>
         }
     }
 
-    async consume(message: UrlResolved): Promise<void> {
-        console.log("Handle message");
-    }    
+    async consume(urlResolved: UrlResolved): Promise<void> {
+        await this.updateTrack(urlResolved);
+    }
 }
