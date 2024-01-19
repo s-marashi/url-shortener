@@ -6,10 +6,16 @@ import { Resolve } from "../../../domain/resolve/Resolve";
 export class RedisResolveDataMapper implements DataMapper<Resolve>
 {
     toDomain(dalEntity: any): Resolve {
-        throw new Error("not implemented");
+        return new Resolve(
+            dalEntity.short,
+            dalEntity.long
+        );
     }
 
     toDalEntity(resolve: Resolve): any {
-        throw new Error("not implemented");
+        return {
+            short: resolve.short,
+            long: resolve.long,
+        }
     }
 }

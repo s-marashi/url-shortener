@@ -12,12 +12,28 @@ import { MongoResolveRepository } from "./infrastructure/resolve/mongo/MongoReso
 import { StatisticsApplication } from "./application/StatisticsApplication";
 import { MongoResolveDataMapper } from "./infrastructure/resolve/mongo/MongoResolveDataMapper";
 import { RedisResolveDataMapper } from "./infrastructure/resolve/redis/RedisResolveDataMapper";
+import { RedisClientType } from "redis";
+import { createRedisConnection } from "./infrastructure/db/redisConnection";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
     // Mongodb
     const db: Db = await createMongodbConnection(config.MONGODB_URI, config.MONGODB_NAME);
     bind<Db>(TYPES.Db).toConstantValue(db);
+
+    // Redis
+    console.log(
+        config.REDIS_HOST,
+        parseInt(config.REDIS_PORT),
+        config.REDIS_PASSWORD
+    );
+
+    const cache: RedisClientType = await createRedisConnection(
+        config.REDIS_HOST,
+        parseInt(config.REDIS_PORT),
+        config.REDIS_PASSWORD,
+    );
+    bind<RedisClientType>(TYPES.Cache).toConstantValue(cache);
 
     // Middleware
     bind<RequestValidator>(TYPES.RequestValidator).to(RequestValidator);

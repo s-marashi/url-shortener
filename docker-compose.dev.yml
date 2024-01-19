@@ -33,6 +33,9 @@ services:
     environment:
       - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
       - MONGODB_NAME=url_shortener
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      # - REDIS_PASSWORD=password
   
   mongodb:
     image: mongo
@@ -50,10 +53,11 @@ services:
     restart: always
     ports:
       - 6379:6379
+    command: [redis-server, /usr/local/etc/redis.conf]
     volumes:
       - ./data/redis:/data
-      - ./config/redis:/usr/local/etc/redis
+      - ./config/redis/redis.conf:/usr/local/etc/redis.conf
     environment:
-      - REDIS_PASSWORD=my-password
+      # - REDIS_PASSWORD=password
       - REDIS_PORT=6379
       # - REDIS_DATABASES=1
