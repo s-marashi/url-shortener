@@ -23,7 +23,7 @@ import { UrlResolvedQueue } from "./domain/urlResolved/UrlResolvedQueue";
     new Promise((resolve, reject)=>{
       try {
         const cron: CronScheduleHandler = new CronScheduleHandler();
-        cron.schedule("*/5 * * * * *", container.get(TYPES.UnusedUrlCleanupApplication));
+        cron.schedule("* */12 * * *", container.get(TYPES.UnusedUrlCleanupApplication));
         resolve({name: "cron"});
       } catch (error) {
         reject(error.toString());
