@@ -30,6 +30,7 @@ services:
     depends_on:
       - mongodb
       - redis
+      - rabbitmq
     environment:
       - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
       - MONGODB_NAME=url_shortener
@@ -61,3 +62,13 @@ services:
       # - REDIS_PASSWORD=password
       - REDIS_PORT=6379
       # - REDIS_DATABASES=1
+
+  rabbitmq:
+      image: rabbitmq:3.12.12-management-alpine
+      container_name: 'rabbitmq'
+      ports:
+          - 5672:5672
+          - 15672:15672
+      volumes:
+          - ./data/rabbitmq/data/:/var/lib/rabbitmq/
+          - ./data/rabbitmq/log/:/var/log/rabbitmq
