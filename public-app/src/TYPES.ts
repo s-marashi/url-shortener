@@ -12,7 +12,6 @@ export const TYPES = {
     MongoResolveDataMapper: Symbol('DbResolveDataMapper'),
     RedisResolveDataMapper: Symbol('RedisResolveDataMapper'),
 
-    StatisticsApplication: Symbol('StatisticsApplication'),
-    StatisticsQueue: Symbol('StatisticsQueue'),
-    StatisticsDataMapper: Symbol('StatisticsDataMapper'),
+    UrlResolvedQueue: Symbol('UrlResolvedQueue'),
+    UrlResolvedDataMapper: Symbol('UrlResolvedDataMapper'),
 }

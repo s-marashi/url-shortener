@@ -1,18 +1,18 @@
 import { injectable } from "inversify";
 import { DataMapper } from "../DataMapper";
-import { Statistics } from "../../domain/statistics/Statistics";
+import { UrlResolved } from "../../domain/urlResolved/UrlResolved";
 
 @injectable()
-export class StatisticsDataMapper implements DataMapper<Statistics>
+export class UrlResolvedDataMapper implements DataMapper<UrlResolved>
 {
-    toDomain(dalEntity: any): Statistics {
-        return new Statistics(
+    toDomain(dalEntity: any): UrlResolved {
+        return new UrlResolved(
             dalEntity.short,
             dalEntity.timestamp,
         );
     }
 
-    toDalEntity(statistics: Statistics): any {
+    toDalEntity(statistics: UrlResolved): any {
         return Buffer.from(JSON.stringify(
             {
                 short: statistics.short,

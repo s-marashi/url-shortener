@@ -2,15 +2,16 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../TYPES";
 import { ResolveRepository } from "../domain/resolve/ResolveRepository";
 import { Resolve } from "../domain/resolve/Resolve";
-import { StatisticsApplication } from "./StatisticsApplication";
+import { UrlResolvedQueue } from "../domain/urlResolved/UrlResolvedQueue";
+import { UrlResolved } from "../domain/urlResolved/UrlResolved";
 
 @injectable()
 export class ResolveApplication {
     constructor(
         @inject(TYPES.ResolveRepository)
         private readonly resolveRepository: ResolveRepository,
-        @inject(TYPES.StatisticsApplication)
-        private readonly statisticsApplication: StatisticsApplication,
+        @inject(TYPES.UrlResolvedQueue)
+        private readonly urlResolvedQueue: UrlResolvedQueue,
     ) { }
 
     async resolveIt(short: string, queryParams: any): Promise<string | null> {
@@ -19,7 +20,7 @@ export class ResolveApplication {
             return null;
         }
 
-        this.statisticsApplication.send(resolve);
+        await this.urlResolvedQueue.push(UrlResolved.createFromResolve(resolve));
 
         return this.makeResolvedUrl(resolve, queryParams);
     }
