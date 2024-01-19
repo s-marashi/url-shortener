@@ -8,7 +8,7 @@ export class UrlResolved {
 
     public static createFromResolve(resolve: Resolve): UrlResolved {
         return new UrlResolved(
-            resolve.long,
+            resolve.short,
             new Date(),
         );
     }
