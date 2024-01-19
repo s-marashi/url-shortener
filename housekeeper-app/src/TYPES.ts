@@ -16,7 +16,7 @@ export const TYPES = {
     StatisticsQueue: Symbol('StatisticsQueue'),
     StatisticsDataMapper: Symbol('StatisticsDataMapper'),
 
-
+    ResolveTrackApplication: Symbol('ResolveTrackApplication'),
     ResolveTrackRepository: Symbol('ResolveTrackRepository'),
 
     UrlResolvedQueue: Symbol('UrlResolvedQueue'),

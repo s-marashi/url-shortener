@@ -3,14 +3,15 @@ import { inject, injectable } from "inversify";
 import { ResolveTrackRepository } from "@domain/resolveTrack/ResolveTrackRepository";
 import { ResolveTrack } from "../domain/resolveTrack/ResolveTrack";
 import { UrlResolved } from "../domain/urlResolved/UrlResolved";
+import { MessageQueueHandler } from "../domain/MessageQueueHandler";
 
 @injectable()
-export class ResolveTrackApplication {
+export class ResolveTrackApplication implements MessageQueueHandler<UrlResolved> {
     constructor(
         @inject(TYPES.ResolveTrackRepository) private readonly resolveTrackRepository: ResolveTrackRepository,
     ) { }
 
-    async updateTrack(urlResolved: UrlResolved): Promise<void> {
+    private async updateTrack(urlResolved: UrlResolved): Promise<void> {
         let resolveTrack: ResolveTrack | null = await this.resolveTrackRepository.findByShort(urlResolved.short);
         if (resolveTrack === null) {
             resolveTrack = ResolveTrack.createFromUrlResolved(urlResolved);
@@ -30,4 +31,8 @@ export class ResolveTrackApplication {
             // clear repo
         }
     }
+
+    async consume(message: UrlResolved): Promise<void> {
+        console.log("Handle message");
+    }    
 }

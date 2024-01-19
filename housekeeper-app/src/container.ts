@@ -10,6 +10,7 @@ import { ResolveTrackRepository } from "./domain/resolveTrack/ResolveTrackReposi
 import { UrlResolvedQueue } from "./domain/urlResolved/UrlResolvedQueue";
 import { UrlResolvedDataMapper } from "./infrastructure/urlResolved/UrlResolvedDataMapper";
 import { RabbitmqUrlResolvedQueue } from "./infrastructure/urlResolved/RabbitmqUrlResolvedQueue";
+import { ResolveTrackApplication } from "./application/ResolveTrackApplication";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
@@ -32,6 +33,7 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     );
     bind<Channel>(TYPES.MessageQueue).toConstantValue(messageQueue);
 
+    bind<ResolveTrackApplication>(TYPES.ResolveTrackApplication).to(ResolveTrackApplication).inSingletonScope();
     bind<ResolveTrackRepository>(TYPES.ResolveTrackRepository).to(InMemoryResolveTrackRepository).inSingletonScope();
 
     bind<UrlResolvedQueue>(TYPES.UrlResolvedQueue).to(RabbitmqUrlResolvedQueue).inSingletonScope();
