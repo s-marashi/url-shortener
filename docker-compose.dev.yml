@@ -37,6 +37,11 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       # - REDIS_PASSWORD=password
+      # RABBIT VARIABLES
+      - RABBITMQ_USER=user
+      - RABBITMQ_PASSWORD=pass
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
   
   mongodb:
     image: mongo
@@ -65,10 +70,12 @@ services:
 
   rabbitmq:
       image: rabbitmq:3.12.12-management-alpine
-      container_name: 'rabbitmq'
       ports:
           - 5672:5672
           - 15672:15672
+      environment:
+          - RABBITMQ_DEFAULT_PASS=pass
+          - RABBITMQ_DEFAULT_USER=user
       volumes:
           - ./data/rabbitmq/data/:/var/lib/rabbitmq/
           - ./data/rabbitmq/log/:/var/log/rabbitmq

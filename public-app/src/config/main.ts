@@ -11,4 +11,10 @@ export const config = {
     REDIS_PASSWORD: process.env.REDIS_PASSWORD,
     REDIS_HOST: process.env.REDIS_HOST,
     REDIS_PORT: process.env.REDIS_PORT,
+
+    // rabbitmq
+    RABBITMQ_USER: process.env.RABBITMQ_USER,
+    RABBITMQ_PASSWORD: process.env.RABBITMQ_PASSWORD,
+    RABBITMQ_HOST: process.env.RABBITMQ_HOST,
+    RABBITMQ_PORT: process.env.RABBITMQ_PORT,
 }

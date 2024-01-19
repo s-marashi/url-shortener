@@ -3,6 +3,7 @@ export const TYPES = {
 
     Db: Symbol('Db'),
     Cache: Symbol('Cache'),
+    MessageQueue: Symbol('MessageQueue'),
 
     ResolveController: Symbol('ResolveController'),
     ResolveApplication: Symbol('ResolveApplication'),

@@ -14,6 +14,8 @@ import { MongoResolveDataMapper } from "./infrastructure/resolve/mongo/MongoReso
 import { RedisResolveDataMapper } from "./infrastructure/resolve/redis/RedisResolveDataMapper";
 import { RedisClientType } from "redis";
 import { createRedisConnection } from "./infrastructure/db/redisConnection";
+import { Channel } from "amqplib/callback_api";
+import { createRabbitmqConnection } from "./infrastructure/db/rabbitmqConnection";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
@@ -34,6 +36,14 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
         config.REDIS_PASSWORD,
     );
     bind<RedisClientType>(TYPES.Cache).toConstantValue(cache);
+
+    const messageQueue: Channel = await createRabbitmqConnection(
+        config.RABBITMQ_USER,
+        config.RABBITMQ_PASSWORD,
+        config.RABBITMQ_HOST,
+        config.RABBITMQ_PORT,
+    );
+    bind<Channel>(TYPES.MessageQueue).toConstantValue(messageQueue);
 
     // Middleware
     bind<RequestValidator>(TYPES.RequestValidator).to(RequestValidator);
