@@ -7,9 +7,11 @@ export class ResolveTrack {
         private lastVisitedAt: Date,
     ) { }
 
-    updateWithUrlResolved(urlResolved: UrlResolved) {
+    updateWithUrlResolved(urlResolved: UrlResolved): void {
         this.count += 1;
-        this.lastVisitedAt = urlResolved.timestamp;
+        if (this.lastVisitedAt < urlResolved.timestamp) {
+            this.lastVisitedAt = urlResolved.timestamp;
+        }
     }
 
     static createFromUrlResolved(urlResolved: UrlResolved): ResolveTrack {
@@ -20,11 +22,15 @@ export class ResolveTrack {
         );
     }
 
-    getShort() {
+    getShort(): string {
         return this.short;
     }
 
-    getCount() {
+    getCount(): number {
         return this.count;
+    }
+
+    getLastVisitedAt(): Date {
+        return this.lastVisitedAt;
     }
 }

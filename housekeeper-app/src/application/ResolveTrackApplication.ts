@@ -4,11 +4,13 @@ import { ResolveTrackRepository } from "../domain/resolveTrack/ResolveTrackRepos
 import { ResolveTrack } from "../domain/resolveTrack/ResolveTrack";
 import { UrlResolved } from "../domain/urlResolved/UrlResolved";
 import { MessageQueueHandler } from "../domain/MessageQueueHandler";
+import { UrlApplication } from "./UrlApplication";
 
 @injectable()
 export class ResolveTrackApplication implements MessageQueueHandler<UrlResolved> {
     constructor(
         @inject(TYPES.ResolveTrackRepository) private readonly resolveTrackRepository: ResolveTrackRepository,
+        @inject(TYPES.UrlApplication) private readonly urlApplication: UrlApplication,
     ) { }
 
     private async updateTrack(urlResolved: UrlResolved): Promise<void> {
@@ -20,15 +22,19 @@ export class ResolveTrackApplication implements MessageQueueHandler<UrlResolved>
         }
 
         if (resolveTrack.getCount() === 10000) {
-            // persist it in mongo
+            await this.urlApplication.updateUrlWithResolveTrack(resolveTrack);
             await this.resolveTrackRepository.delete(resolveTrack);
             return;
         }
 
         const repoSize: number = await this.resolveTrackRepository.save(resolveTrack);
         if (repoSize > 1000) {
-            // persist them
-            // clear repo
+            const shorts: string[] = await this.resolveTrackRepository.getAllKeys();
+            for (const short of shorts) {
+                const resolveTrack: ResolveTrack = await this.resolveTrackRepository.findByShort(short);
+                await this.urlApplication.updateUrlWithResolveTrack(resolveTrack);
+                await this.resolveTrackRepository.delete(resolveTrack);
+            }
         }
     }
 

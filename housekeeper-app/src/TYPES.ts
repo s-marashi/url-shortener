@@ -21,4 +21,8 @@ export const TYPES = {
 
     UrlResolvedQueue: Symbol('UrlResolvedQueue'),
     UrlResolvedDataMapper: Symbol('UrlResolvedDataMapper'),
+
+    UrlApplication: Symbol('UrlApplication'),
+    UrlRepository: Symbol('UrlRepository'),
+    UrlDataMapper: Symbol('UrlDataMapper'),
 }

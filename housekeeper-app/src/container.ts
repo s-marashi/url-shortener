@@ -11,6 +11,10 @@ import { UrlResolvedQueue } from "./domain/urlResolved/UrlResolvedQueue";
 import { UrlResolvedDataMapper } from "./infrastructure/urlResolved/UrlResolvedDataMapper";
 import { RabbitmqUrlResolvedQueue } from "./infrastructure/urlResolved/RabbitmqUrlResolvedQueue";
 import { ResolveTrackApplication } from "./application/ResolveTrackApplication";
+import { UrlApplication } from "./application/UrlApplication";
+import { UrlRepository } from "./domain/url/UrlRepository";
+import { UrlDataMapper } from "./infrastructure/url/UrlDataMapper";
+import { MongoUrlRepository } from "./infrastructure/url/MongoUrlRepository";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
@@ -25,6 +29,7 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
         config.REDIS_PASSWORD
     );
 
+    // Rabbitmq
     const messageQueue: Channel = await createRabbitmqConnection(
         config.RABBITMQ_USER,
         config.RABBITMQ_PASSWORD,
@@ -33,9 +38,16 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     );
     bind<Channel>(TYPES.MessageQueue).toConstantValue(messageQueue);
 
+    // ResolveTracker
     bind<ResolveTrackApplication>(TYPES.ResolveTrackApplication).to(ResolveTrackApplication).inSingletonScope();
     bind<ResolveTrackRepository>(TYPES.ResolveTrackRepository).to(InMemoryResolveTrackRepository).inSingletonScope();
 
+    // UrlResolved
     bind<UrlResolvedQueue>(TYPES.UrlResolvedQueue).to(RabbitmqUrlResolvedQueue).inSingletonScope();
     bind<UrlResolvedDataMapper>(TYPES.UrlResolvedDataMapper).to(UrlResolvedDataMapper).inSingletonScope();
+
+    // Url
+    bind<UrlApplication>(TYPES.UrlApplication).to(UrlApplication).inSingletonScope();
+    bind<UrlRepository>(TYPES.UrlRepository).to(MongoUrlRepository).inSingletonScope();
+    bind<UrlDataMapper>(TYPES.UrlDataMapper).to(UrlDataMapper).inSingletonScope();
 });
