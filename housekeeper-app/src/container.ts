@@ -26,13 +26,6 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     const db: Db = await createMongodbConnection(config.MONGODB_URI, config.MONGODB_NAME);
     bind<Db>(TYPES.Db).toConstantValue(db);
 
-    // Redis
-    console.log(
-        config.REDIS_HOST,
-        parseInt(config.REDIS_PORT),
-        config.REDIS_PASSWORD
-    );
-
     // Rabbitmq
     const messageQueue: Channel = await createRabbitmqConnection(
         config.RABBITMQ_USER,
