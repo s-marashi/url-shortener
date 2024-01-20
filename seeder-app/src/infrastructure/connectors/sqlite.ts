@@ -1,16 +1,16 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { SeedEntity } from "../seed/SeedEntity"
+import { SeedCounterEntity } from "../seedCounter/SeedCounterEntity";
 
-export const createSqliteConnection = async (dbpath: string):Promise<void> => {
+export const createSqliteConnection = async (dbpath: string):Promise<DataSource> => {
     const dataSource = new DataSource({
         type: "sqlite",
         database: dbpath,
-        entities: [SeedEntity],
+        entities: [SeedEntity, SeedCounterEntity],
         synchronize: true,
         logging: false,
     });
 
-    const a = await dataSource.initialize();
-    console.log(a);
+    return await dataSource.initialize();
 }

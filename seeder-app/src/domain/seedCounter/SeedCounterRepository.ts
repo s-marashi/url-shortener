@@ -1,5 +1,3 @@
-import { SeedCounter } from "./SeedCounter";
-
-export interface SeedRepository {
+export interface SeedCounterRepository {
     getAndIncrease(): Promise<number>;
 }

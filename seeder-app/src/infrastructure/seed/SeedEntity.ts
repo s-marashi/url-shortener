@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class SeedEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Index({ unique: true })
     @Column()
     seedId: number;
 
