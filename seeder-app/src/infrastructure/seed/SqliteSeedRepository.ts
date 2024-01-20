@@ -23,7 +23,7 @@ export class SqliteSeedRepository implements SeedRepository {
     async save(seed: Seed): Promise<void> {
         const seedEntity: SeedEntity = new SeedEntity();
         seedEntity.seedId = seed.getSeedId();
-        seedEntity.form = seed.getFrom();
+        seedEntity.from = seed.getFrom();
         seedEntity.to = seed.getTo();
         seedEntity.issuedAt = seed.getIssuedAt();
         seedEntity.issuedTo = seed.getIssuedTo();

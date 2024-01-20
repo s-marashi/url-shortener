@@ -1,5 +1,7 @@
 import { ShortUrlProvider } from "../../domain/url/ShortUrlProvider";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
+import axios, { AxiosResponse } from "axios";
+import { TYPES } from "../../TYPES";
 
 @injectable()
 export class ApiShortUrlProvider implements ShortUrlProvider {
@@ -11,6 +13,10 @@ export class ApiShortUrlProvider implements ShortUrlProvider {
     private readonly N1 = '0000001';
     private readonly N10000 = '00001C8';
     private readonly N1000000 = '0004c92';
+
+    constructor(
+        @inject(TYPES.ShortUrlProviderAPI) private readonly shortUrlProviderApi: string
+    ) { }
 
     async getShortUrl(): Promise<string | null> {
         try {
@@ -35,7 +41,26 @@ export class ApiShortUrlProvider implements ShortUrlProvider {
     }
 
     private async getRange(): Promise<void> {
-        // throw exception if api call failed
+        try {
+            const response: AxiosResponse = await axios.post(
+                this.shortUrlProviderApi,
+                { identity: "" },
+            );
+
+            if (response.status !== 200) {
+                throw new Error("Failed to get range");
+            }
+
+            this.min = response.data.from;
+            this.max = response.data.to;
+
+            return;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    private fallbackGetRange(): void {
         if (this.min === null) {
             this.min = this.N10000;
             this.max = this.N1000000;

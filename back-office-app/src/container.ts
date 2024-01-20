@@ -23,6 +23,8 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     const db: Db = await createMongodbConnection(config.MONGODB_URI, config.MONGODB_NAME);
     bind<Db>(TYPES.Db).toConstantValue(db);
 
+    bind<string>(TYPES.ShortUrlProviderAPI).toConstantValue(config.SEEDER_URL);
+
     // Middleware
     bind<RequestValidator>(TYPES.RequestValidator).to(RequestValidator);
     bind<TokenValidator>(TYPES.TokenValidator).to(TokenValidator);

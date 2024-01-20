@@ -5,6 +5,7 @@ import { asyncContainer } from "./container";
 import { Container } from "inversify";
 import './controllers/UserController';
 import './controllers/UrlController';
+import cors from "cors";
 
 (async () => {
   const container = new Container();
@@ -13,7 +14,8 @@ import './controllers/UrlController';
   // API Server initialisation
   const server = new InversifyExpressServer(container);
   server.setConfig((app: ExpressApplication)=>{
-    app.use(json())
+    app.use(cors());
+    app.use(json());
   });
 
   // server.setErrorConfig((app: ExpressApplication) => {

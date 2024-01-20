@@ -10,7 +10,7 @@ export class SeedEntity {
     seedId: number;
 
     @Column()
-    form: string;
+    from: string;
 
     @Column()
     to: string;

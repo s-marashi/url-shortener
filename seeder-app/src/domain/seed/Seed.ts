@@ -1,13 +1,24 @@
 export class Seed {
+    private static readonly CHAR_COUNT = 7;
+    private static readonly CHUNK_LENGTH = 1000000;
+    private static readonly SEED_MAX:number = Math.floor(Math.pow(62, this.CHAR_COUNT)/this.CHUNK_LENGTH);
+
+    private static readonly CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    private static readonly BASE = this.CHARS.length;
+
     constructor (
         private readonly seedId: number,
-        private readonly form: string,
+        private readonly from: string,
         private readonly to: string,
         private readonly issuedAt: Date,
         private readonly issuedTo: string,
     ) {}
 
     static createFromSeedId(seedId: number, identity: string): Seed {
+        if (seedId > this.SEED_MAX) {
+            return null;
+        }
+
         return new Seed(
             seedId,
             this.convertToBase62(seedId*1000000),
@@ -18,20 +29,18 @@ export class Seed {
     }
 
     static convertToBase62(number: number): string {
-        const base = 62;
-        const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         let result = '';
       
         if (number === 0) {
-          return '0';
+          return Seed.CHARS[0].repeat(Seed.CHAR_COUNT);
         }
       
         while (number > 0) {
-          result = characters.charAt(number % base) + result;
-          number = Math.floor(number / base);
+          result = Seed.CHARS.charAt(number % Seed.BASE) + result;
+          number = Math.floor(number / Seed.BASE);
         }
       
-        return result.padStart(7, '0');
+        return result.padStart(Seed.CHAR_COUNT, Seed.CHARS[0]);
       }
 
     getSeedId() {
@@ -39,7 +48,7 @@ export class Seed {
     }
 
     getFrom() {
-        return this.form;
+        return this.from;
     }
 
     getTo() {
