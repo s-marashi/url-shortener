@@ -19,7 +19,7 @@ import './controllers/SeedController';
   //   app.use(errorHandler);
   // });
 
-  server.build().listen(4000, () => {
-    console.log("Server started on http://localhost:4000");
+  server.build().listen(5000, () => {
+    console.log("Server started on http://localhost:5000");
   });
 })();

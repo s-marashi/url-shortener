@@ -63,7 +63,19 @@ services:
       - RABBITMQ_USER=user
       - RABBITMQ_PASSWORD=pass
       - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672 
+      - RABBITMQ_PORT=5672
+
+  seeder-app:
+    build:
+      context: ./seeder-app/
+      target: development
+    volumes:
+      - ./seeder-app/:/usr/src/app
+      - ./data/seeder/:/usr/src/app/data
+      - /usr/src/app/node_modules
+    ports:
+      - 5000:5000
+    command: npm run dev
 
   mongodb:
     image: mongo
