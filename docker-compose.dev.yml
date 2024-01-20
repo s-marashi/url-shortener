@@ -24,6 +24,8 @@ services:
       - BACK_OFFICE_APP_PORT=${BACK_OFFICE_APP_PORT}
     # seeder
       - SEEDER_URL=http://seeder-app:${SEEDER_APP_PORT}
+    # jwt
+      - JWT_SECRET=${JWT_SECRET}
   
   public-app:
     build:
