@@ -3,7 +3,6 @@ import { TYPES } from "./TYPES";
 import { config } from "./config/main";
 import { Db } from "mongodb";
 import { createMongodbConnection } from "./infrastructure/connectors/mongoDb";
-import { RequestValidator } from "./controllers/middleware/RequestValidator";
 import { ResolveController } from "./controllers/ResolveController";
 import { ResolveApplication } from "./application/ResolveApplication";
 import { ResolveRepository } from "./domain/resolve/ResolveRepository";
@@ -18,6 +17,7 @@ import { createRabbitmqConnection } from "./infrastructure/connectors/rabbitmqCo
 import { UrlResolvedQueue } from "./domain/urlResolved/UrlResolvedQueue";
 import { RabbitmqUrlResolvedQueue } from "./infrastructure/urlResolved/RabbitmqUrlResolvedQueue";
 import { UrlResolvedDataMapper } from "./infrastructure/urlResolved/UrlResolvedDataMapper";
+import { ShortUrlValidator } from "./controllers/middleware/ShortUrlValidator";
 
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
@@ -34,6 +34,7 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     );
     bind<RedisClientType>(TYPES.Cache).toConstantValue(cache);
 
+    // Rabbit
     const messageQueue: Channel = await createRabbitmqConnection(
         config.RABBITMQ_USER,
         config.RABBITMQ_PASSWORD,
@@ -43,7 +44,7 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     bind<Channel>(TYPES.MessageQueue).toConstantValue(messageQueue);
 
     // Middleware
-    bind<RequestValidator>(TYPES.RequestValidator).to(RequestValidator);
+    bind<ShortUrlValidator>(TYPES.ShortUrlValidator).to(ShortUrlValidator);
 
     bind<ResolveController>(TYPES.ResolveController).to(ResolveController).inSingletonScope();
     bind<ResolveApplication>(TYPES.ResolveApplication).to(ResolveApplication).inSingletonScope();
