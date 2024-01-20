@@ -27,16 +27,10 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     bind<Db>(TYPES.Db).toConstantValue(db);
 
     // Redis
-    console.log(
-        config.REDIS_HOST,
-        parseInt(config.REDIS_PORT),
-        config.REDIS_PASSWORD
-    );
-
     const cache: RedisClientType = await createRedisConnection(
         config.REDIS_HOST,
         parseInt(config.REDIS_PORT),
-        config.REDIS_PASSWORD,
+        null
     );
     bind<RedisClientType>(TYPES.Cache).toConstantValue(cache);
 

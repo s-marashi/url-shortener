@@ -11,7 +11,6 @@ export const config = {
     MONGO_PORT: process.env.MONGO_PORT,
 
     // redis
-    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
     REDIS_HOST: process.env.REDIS_HOST,
     REDIS_PORT: process.env.REDIS_PORT,
 
