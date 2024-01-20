@@ -24,6 +24,7 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     const db: Db = await createMongodbConnection(mongoUri, config.MONGODB_NAME);
     bind<Db>(TYPES.Db).toConstantValue(db);
 
+    // Seeder
     bind<string>(TYPES.ShortUrlProviderAPI).toConstantValue(config.SEEDER_URL);
 
     // Middleware

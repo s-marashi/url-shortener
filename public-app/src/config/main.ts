@@ -1,7 +1,5 @@
 export const config = {
-    PUBLIC_APP_PORT: process.env.PUBLIC_APP_PORT || '3000',
-
-    JWT_SECRET: process.env.JWT_SECRET || 'secret_token_to_be_changed',
+    PUBLIC_APP_PORT: process.env.PUBLIC_APP_PORT,
 
     // mongo
     MONGO_USERNAME: process.env.MONGO_USERNAME,

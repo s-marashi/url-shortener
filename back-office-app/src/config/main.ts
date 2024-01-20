@@ -12,5 +12,5 @@ export const config = {
     JWT_SECRET: process.env.JWT_SECRET || 'secret_token_to_be_changed',
     
     // seeder
-    SEEDER_URL: process.env.SEEDER_URL || 'http://seeder-app:5000/seed',
+    SEEDER_URL: process.env.SEEDER_URL,
 }

@@ -1,5 +1,5 @@
 export const config = {
-    HOUSEKEEPER_APP_PORT: process.env.HOUSEKEEPER_APP_PORT || '5000',
+    HOUSEKEEPER_APP_PORT: process.env.HOUSEKEEPER_APP_PORT,
 
     // mongo
     MONGO_USERNAME: process.env.MONGO_USERNAME,

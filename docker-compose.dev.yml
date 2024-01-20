@@ -20,7 +20,10 @@ services:
       - MONGODB_NAME=${MONGODB_NAME}
       - MONGO_HOST=${MONGO_HOST}
       - MONGO_PORT=${MONGO_PORT}
+    # app
       - BACK_OFFICE_APP_PORT=${BACK_OFFICE_APP_PORT}
+    # seeder
+      - SEEDER_URL=http://seeder-app:${SEEDER_APP_PORT}
   
   public-app:
     build:
@@ -47,10 +50,11 @@ services:
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
     # rabbit
-      - RABBITMQ_USER=user
-      - RABBITMQ_PASSWORD=pass
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PORT=${RABBITMQ_PORT}
+    # app
       - PUBLIC_APP_PORT=${PUBLIC_APP_PORT}
   
   housekeeper-app:
@@ -67,17 +71,18 @@ services:
       - mongodb
       - rabbitmq
     environment:
-    # Mongo
+    # mongo
       - MONGO_USERNAME=${MONGO_USERNAME}
       - MONGO_PASSWORD=${MONGO_PASSWORD}
       - MONGODB_NAME=${MONGODB_NAME}
       - MONGO_HOST=${MONGO_HOST}
       - MONGO_PORT=${MONGO_PORT}
-      # RABBIT VARIABLES
-      - RABBITMQ_USER=user
-      - RABBITMQ_PASSWORD=pass
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
+    # rabbit
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PORT=${RABBITMQ_PORT}
+    # app
       - HOUSEKEEPER_APP_PORT=${HOUSEKEEPER_APP_PORT}
 
   seeder-app:
@@ -120,11 +125,11 @@ services:
   rabbitmq:
       image: rabbitmq:3.12.12-management-alpine
       ports:
-          - 5672:5672
-          - 15672:15672
+          - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+          - ${RABBITMQ_MANAGEMENT_PORT}:${RABBITMQ_MANAGEMENT_PORT}
       environment:
-          - RABBITMQ_DEFAULT_PASS=pass
-          - RABBITMQ_DEFAULT_USER=user
+          - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+          - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
       volumes:
           - ./data/rabbitmq/data/:/var/lib/rabbitmq/
           - ./data/rabbitmq/log/:/var/log/rabbitmq
