@@ -1,9 +1,11 @@
 import { injectable, inject } from "inversify";
 import { TYPES } from "../../TYPES";
 import { Collection, Db, ObjectId } from "mongodb";
-import { UrlRepository } from "../../domain/url/UrlRepository";
+import { UrlRepository } from "../../domain/seed/SeedRepository";
 import { UrlDataMapper } from "./UrlDataMapper";
-import { Url } from "../../domain/url/Url";
+import { Url } from "../../domain/seed/Seed";
+import { Statistics } from "../../domain/statistics/Statistics";
+import { StatisticsDataMapper } from "../statistics/StatistisDataMapper";
 
 export @injectable()
 class MongoUrlRepository implements UrlRepository {
@@ -12,8 +14,10 @@ class MongoUrlRepository implements UrlRepository {
     constructor(
         @inject(TYPES.Db) private readonly db: Db,
         @inject(TYPES.UrlDataMapper) private readonly dataMapper: UrlDataMapper,
+        @inject(TYPES.StatisticsDataMapper) private readonly statisticsDataMapper: StatisticsDataMapper,
     ) {
         this.collection = db.collection('urls');
+        this.setupIndices();
     }
 
     async doesExists(long: string, userId: string): Promise<boolean> {
@@ -63,25 +67,24 @@ class MongoUrlRepository implements UrlRepository {
         return true;
     }
 
-    async findOneByShort(short: string): Promise<Url | null> {
-        const dbResult = await this.collection.findOne({ short });
-        if (dbResult === null) {
-            return null;
+    async getStatisticsByUserId(userId: string): Promise<Statistics[]> {
+        const urls = await this.collection.find({ userId: ObjectId.createFromHexString(userId) }).toArray();
+        const statistics = [];
+        for (const url of urls) {
+            statistics.push(this.statisticsDataMapper.toDomain(url));
         }
 
-        return this.dataMapper.toDomain(dbResult);
+        return statistics;
     }
 
-    async findUrlsNotvisitedAfter(threshold: Date, count: number): Promise<Url[]> {
-        const urls: Url[] = [];
-        const cursor = this.collection.find({
-            lastVisitedAt: { $lt: threshold }
-        }).limit(count);
+    private async setupIndices(): Promise<void> {
+        const indexUserLongUrls = { userId: 1, long: 1 };
+        await this.collection.createIndex(indexUserLongUrls, { unique: true });
 
-        for await (const dal of cursor) {
-            urls.push(this.dataMapper.toDomain(dal));
-        }
+        const indexShortUrl = { short: 1 };
+        await this.collection.createIndex(indexShortUrl, { unique: true });
 
-        return urls;
+        const indexLastVisitedAt = { lastVisitedAt: 1 };
+        await this.collection.createIndex(indexLastVisitedAt);
     }
 }
