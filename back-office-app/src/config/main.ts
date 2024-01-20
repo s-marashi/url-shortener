@@ -9,7 +9,7 @@ export const config = {
     MONGO_PORT: process.env.MONGO_PORT,
 
     // jwt
-    JWT_SECRET: process.env.JWT_SECRET || 'secret_token_to_be_changed',
+    JWT_SECRET: process.env.JWT_SECRET,
     
     // seeder
     SEEDER_URL: process.env.SEEDER_URL,
