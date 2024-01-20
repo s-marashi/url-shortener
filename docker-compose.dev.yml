@@ -51,7 +51,7 @@ services:
       - ./housekeeper-app/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 2000:2000
+      - 6000:6000
     command: npm run dev
     depends_on:
       - mongodb
