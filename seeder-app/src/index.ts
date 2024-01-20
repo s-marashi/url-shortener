@@ -5,6 +5,7 @@ import { asyncContainer } from "./container";
 import { Container } from "inversify";
 import './controllers/SeedController';
 import cors from "cors";
+import './controllers/HealthCheckController';
 
 (async () => {
   const container = new Container();
