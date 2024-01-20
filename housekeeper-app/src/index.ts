@@ -8,6 +8,7 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import { Express as ExpressApplication, json } from 'express';
 import cors from 'cors';
 import './controllers/HealthCheckController';
+import { config } from "./config/main";
 
 (async () => {
   const container = new Container();
@@ -27,8 +28,8 @@ import './controllers/HealthCheckController';
   //   });
   // });
 
-  server.build().listen(6000, () => {
-    console.log("Server started on http://localhost:6000");
+  server.build().listen(config.HOUSEKEEPER_APP_PORT, () => {
+    console.log(`Server started on http://localhost:${config.HOUSEKEEPER_APP_PORT}`);
   });
 
   const queue: UrlResolvedQueue = container.get<UrlResolvedQueue>(TYPES.UrlResolvedQueue);

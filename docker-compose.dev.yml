@@ -9,13 +9,14 @@ services:
       - ./back-office-app/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 4000:4000
+      - ${BACK_OFFICE_APP_PORT}:${BACK_OFFICE_APP_PORT}
     command: npm run dev
     depends_on:
       - mongodb
     environment:
       - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
       - MONGODB_NAME=url_shortener
+      - BACK_OFFICE_APP_PORT=${BACK_OFFICE_APP_PORT}
   
   public-app:
     build:
@@ -25,7 +26,7 @@ services:
       - ./public-app/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 3000:3000
+      - ${PUBLIC_APP_PORT}:${PUBLIC_APP_PORT}
     command: npm run dev
     depends_on:
       - mongodb
@@ -42,6 +43,7 @@ services:
       - RABBITMQ_PASSWORD=pass
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
+      - PUBLIC_APP_PORT=${PUBLIC_APP_PORT}
   
   housekeeper-app:
     build:
@@ -51,7 +53,7 @@ services:
       - ./housekeeper-app/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 6000:6000
+      - ${HOUSEKEEPER_APP_PORT}:${HOUSEKEEPER_APP_PORT}
     command: npm run dev
     depends_on:
       - mongodb
@@ -64,6 +66,7 @@ services:
       - RABBITMQ_PASSWORD=pass
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
+      - HOUSEKEEPER_APP_PORT=${HOUSEKEEPER_APP_PORT}
 
   seeder-app:
     build:
@@ -74,8 +77,10 @@ services:
       - ./data/seeder/:/usr/src/app/data
       - /usr/src/app/node_modules
     ports:
-      - 5000:5000
+      - ${SEEDER_APP_PORT}:${SEEDER_APP_PORT}
     command: npm run dev
+    environment:
+      - SEEDER_APP_PORT=${SEEDER_APP_PORT}
 
   mongodb:
     image: mongo

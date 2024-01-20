@@ -6,6 +6,7 @@ import { Container } from "inversify";
 import './controllers/ResolveController';
 import cors from "cors";
 import './controllers/HealthCheckController';
+import { config } from "./config/main";
 
 (async () => {
   const container = new Container();
@@ -21,7 +22,7 @@ import './controllers/HealthCheckController';
   //   app.use(errorHandler);
   // });
 
-  server.build().listen(3000, () => {
-    console.log("Server started on http://localhost:3000");
+  server.build().listen(config.PUBLIC_APP_PORT, () => {
+    console.log(`Server started on http://localhost:${config.PUBLIC_APP_PORT}`);
   });
 })();

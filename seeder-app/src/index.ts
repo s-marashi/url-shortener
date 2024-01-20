@@ -6,6 +6,7 @@ import { Container } from "inversify";
 import './controllers/SeedController';
 import cors from "cors";
 import './controllers/HealthCheckController';
+import { config } from "./config/main";
 
 (async () => {
   const container = new Container();
@@ -22,7 +23,7 @@ import './controllers/HealthCheckController';
   //   app.use(errorHandler);
   // });
 
-  server.build().listen(5000, () => {
-    console.log("Server started on http://localhost:5000");
+  server.build().listen(config.SEEDER_APP_PORT, () => {
+    console.log(`Server started on http://localhost:${config.SEEDER_APP_PORT}`);
   });
 })();

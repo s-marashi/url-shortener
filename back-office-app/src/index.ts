@@ -7,6 +7,7 @@ import './controllers/UserController';
 import './controllers/UrlController';
 import './controllers/HealthCheckController';
 import cors from "cors";
+import { config } from "./config/main";
 
 (async () => {
   const container = new Container();
@@ -23,7 +24,7 @@ import cors from "cors";
   //   app.use(errorHandler);
   // });
 
-  server.build().listen(4000, () => {
-    console.log("Server started on http://localhost:4000");
+  server.build().listen(config.BACK_OFFICE_APP_PORT, () => {
+    console.log(`Server started on :${config.BACK_OFFICE_APP_PORT}`);
   });
 })();

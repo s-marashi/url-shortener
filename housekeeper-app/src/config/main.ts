@@ -1,5 +1,5 @@
 export const config = {
-    API_PORT: process.env.API_PORT || '4000',
+    HOUSEKEEPER_APP_PORT: process.env.HOUSEKEEPER_APP_PORT || '5000',
 
     // mongo
     MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017',

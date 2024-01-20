@@ -1,5 +1,5 @@
 export const config = {
-    API_PORT: process.env.API_PORT || '4000',
+    PUBLIC_APP_PORT: process.env.PUBLIC_APP_PORT || '3000',
 
     JWT_SECRET: process.env.JWT_SECRET || 'secret_token_to_be_changed',
 
