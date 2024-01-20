@@ -32,7 +32,6 @@ export class ResolveApplication {
         for (const [key, value] of requestParams.entries()) {
             baseUrl.searchParams.append(key, value);
         }
-        console.log(baseUrl.searchParams.toString());
 
         return baseUrl.href;
     }

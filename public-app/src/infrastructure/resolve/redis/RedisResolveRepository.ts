@@ -23,13 +23,11 @@ export class RedisResolveRepository implements ResolveRepository {
         if (long === null) {
             return null;
         }
-        console.log(`got a value from redis: ${long}`);
 
         return this.dataMapper.toDomain({short, long});
     }
 
     async set(resolve: Resolve): Promise<void> {
         const result = await this.redis.set(this.makeKey(resolve.short), resolve.long);
-        console.log(result);
     }
 }

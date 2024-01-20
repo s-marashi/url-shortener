@@ -16,7 +16,7 @@ export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.B
     bind<DataSource>(TYPES.Db).toConstantValue(db);
 
     bind<SeedingApplication>(TYPES.SeedingApplication).to(SeedingApplication).inSingletonScope();
-    bind<SeedRepository>(TYPES.SeedRepository).to(SqliteSeedRepository);
+    bind<SeedRepository>(TYPES.SeedRepository).to(SqliteSeedRepository).inSingletonScope();
 
-    bind<SeedCounterRepository>(TYPES.SeedCounterRepository).to(SqliteSeedCounterRepository);
+    bind<SeedCounterRepository>(TYPES.SeedCounterRepository).to(SqliteSeedCounterRepository).inSingletonScope();
 });
