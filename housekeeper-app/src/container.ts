@@ -23,7 +23,8 @@ import { UnusedUrlCleanupApplication } from "./application/UnusedUrlCleanupAppli
 
 export const asyncContainer = new AsyncContainerModule(async (bind: interfaces.Bind) => {
     // Mongodb
-    const db: Db = await createMongodbConnection(config.MONGODB_URI, config.MONGODB_NAME);
+    const mongoUri = `mongodb://${config.MONGO_USERNAME}:${config.MONGO_PASSWORD}@${config.MONGO_HOST}:${config.MONGO_PORT}`
+    const db: Db = await createMongodbConnection(mongoUri, config.MONGODB_NAME);
     bind<Db>(TYPES.Db).toConstantValue(db);
 
     // Rabbitmq

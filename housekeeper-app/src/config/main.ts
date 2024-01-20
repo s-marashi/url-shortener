@@ -2,8 +2,11 @@ export const config = {
     HOUSEKEEPER_APP_PORT: process.env.HOUSEKEEPER_APP_PORT || '5000',
 
     // mongo
-    MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017',
-    MONGODB_NAME: process.env.MONGODB_NAME || 'url_shortener',
+    MONGO_USERNAME: process.env.MONGO_USERNAME,
+    MONGO_PASSWORD: process.env.MONGO_PASSWORD,
+    MONGODB_NAME: process.env.MONGODB_NAME,
+    MONGO_HOST: process.env.MONGO_HOST,
+    MONGO_PORT: process.env.MONGO_PORT,
 
     // rabbitmq
     RABBITMQ_USER: process.env.RABBITMQ_USER,

@@ -14,8 +14,12 @@ services:
     depends_on:
       - mongodb
     environment:
-      - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
-      - MONGODB_NAME=url_shortener
+    # mongo
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGODB_NAME=${MONGODB_NAME}
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
       - BACK_OFFICE_APP_PORT=${BACK_OFFICE_APP_PORT}
   
   public-app:
@@ -33,8 +37,12 @@ services:
       - redis
       - rabbitmq
     environment:
-      - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
-      - MONGODB_NAME=url_shortener
+    # mongo
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGODB_NAME=${MONGODB_NAME}
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       # - REDIS_PASSWORD=password
@@ -59,8 +67,12 @@ services:
       - mongodb
       - rabbitmq
     environment:
-      - MONGODB_URI=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongodb:27017
-      - MONGODB_NAME=url_shortener
+    # Mongo
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGODB_NAME=${MONGODB_NAME}
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
       # RABBIT VARIABLES
       - RABBITMQ_USER=user
       - RABBITMQ_PASSWORD=pass

@@ -4,9 +4,12 @@ export const config = {
     JWT_SECRET: process.env.JWT_SECRET || 'secret_token_to_be_changed',
 
     // mongo
-    MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017',
-    MONGODB_NAME: process.env.MONGODB_NAME || 'url_shortener',
-    
+    MONGO_USERNAME: process.env.MONGO_USERNAME,
+    MONGO_PASSWORD: process.env.MONGO_PASSWORD,
+    MONGODB_NAME: process.env.MONGODB_NAME,
+    MONGO_HOST: process.env.MONGO_HOST,
+    MONGO_PORT: process.env.MONGO_PORT,
+
     // redis
     REDIS_PASSWORD: process.env.REDIS_PASSWORD,
     REDIS_HOST: process.env.REDIS_HOST,
