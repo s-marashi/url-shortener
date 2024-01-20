@@ -20,10 +20,6 @@ import { config } from "./config/main";
     app.use(json());
   });
 
-  // server.setErrorConfig((app: ExpressApplication) => {
-  //   app.use(errorHandler);
-  // });
-
   server.build().listen(config.BACK_OFFICE_APP_PORT, () => {
     console.log(`Server started on :${config.BACK_OFFICE_APP_PORT}`);
   });

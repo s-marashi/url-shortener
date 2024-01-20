@@ -12,15 +12,7 @@
     "target": "ES2022",    
     "sourceMap": true,
     "allowJs": false,
-    "outDir": "dist",
-    "baseUrl": "./",
-    "paths": {
-      "@application/*": ["src/application/*"],
-      "@config/*": ["src/config/*"],
-      "@controllers/*": ["src/controllers/*"],
-      "@domain/*": ["src/domain/*"],
-      "@infrastructure/*": ["src/infrastructure/*"],
-    }
+    "outDir": "./dist",
   },
   "include": ["src/**/*", "integration/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]

@@ -1,2 +1,5 @@
 .env
-data/
+data/mongo-data/*
+data/rabbitmq/*
+data/redis/*
+data/seeder/*

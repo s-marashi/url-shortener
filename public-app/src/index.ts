@@ -12,17 +12,14 @@ import { config } from "./config/main";
   const container = new Container();
   await container.loadAsync(asyncContainer);
 
+
   const server = new InversifyExpressServer(container);
   server.setConfig((app: ExpressApplication)=>{
     app.use(cors());
     app.use(json());
   });
 
-  // server.setErrorConfig((app: ExpressApplication) => {
-  //   app.use(errorHandler);
-  // });
-
   server.build().listen(config.PUBLIC_APP_PORT, () => {
-    console.log(`Server started on http://localhost:${config.PUBLIC_APP_PORT}`);
+    console.log(`Server started on :${config.PUBLIC_APP_PORT}`);
   });
 })();

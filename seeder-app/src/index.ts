@@ -12,6 +12,7 @@ import { config } from "./config/main";
   const container = new Container();
   await container.loadAsync(asyncContainer);
 
+
   // API Server initialisation
   const server = new InversifyExpressServer(container);
   server.setConfig((app: ExpressApplication) => {
@@ -19,11 +20,7 @@ import { config } from "./config/main";
     app.use(json());
   });
 
-  // server.setErrorConfig((app: ExpressApplication) => {
-  //   app.use(errorHandler);
-  // });
-
   server.build().listen(config.SEEDER_APP_PORT, () => {
-    console.log(`Server started on http://localhost:${config.SEEDER_APP_PORT}`);
+    console.log(`Server started on :${config.SEEDER_APP_PORT}`);
   });
 })();

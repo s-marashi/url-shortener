@@ -24,14 +24,4 @@ if [ -z ${MONGO_USERNAME+X} ]; then
     fi
 fi
 
-if [ -z "$1" ]; then
-    export mode=
-else
-    if [ "$1" = "dev"]; then
-        export mode=.dev
-    else
-        export mode=
-    fi
-fi
-
-docker compose -f docker-compose${mode}.yml up --build
+docker compose -f docker-compose.yml up --build

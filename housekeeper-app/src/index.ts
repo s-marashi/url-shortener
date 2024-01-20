@@ -14,6 +14,7 @@ import { config } from "./config/main";
   const container = new Container();
   await container.loadAsync(asyncContainer);
 
+
   // API Server initialisation
   const server = new InversifyExpressServer(container);
   server.setConfig((app: ExpressApplication) => {
@@ -21,15 +22,8 @@ import { config } from "./config/main";
     app.use(json());
   });
 
-  // server.setErrorConfig((app: ExpressApplication) => {
-  //   app.use((err, req, res, next) => {
-  //     console.log(err, req);
-  //     next();
-  //   });
-  // });
-
   server.build().listen(config.HOUSEKEEPER_APP_PORT, () => {
-    console.log(`Server started on http://localhost:${config.HOUSEKEEPER_APP_PORT}`);
+    console.log(`Server started on :${config.HOUSEKEEPER_APP_PORT}`);
   });
 
   const queue: UrlResolvedQueue = container.get<UrlResolvedQueue>(TYPES.UrlResolvedQueue);

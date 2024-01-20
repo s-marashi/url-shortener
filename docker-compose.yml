@@ -1,97 +1,103 @@
+version: "3"
+
 services:
   back-office-app:
     build:
       context: ./back-office-app/
-      target: production
+      target: development
     volumes:
       - ./back-office-app/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - ${BACK_OFFICE_APP_PORT}:${BACK_OFFICE_APP_PORT}
+    command: npm run dev
     depends_on:
       - mongodb
     environment:
-    # mongo
+      # mongo
       - MONGO_USERNAME=${MONGO_USERNAME}
       - MONGO_PASSWORD=${MONGO_PASSWORD}
       - MONGODB_NAME=${MONGODB_NAME}
       - MONGO_HOST=${MONGO_HOST}
       - MONGO_PORT=${MONGO_PORT}
-    # app
+      # app
       - BACK_OFFICE_APP_PORT=${BACK_OFFICE_APP_PORT}
-    # seeder
-      - SEEDER_URL=http://seeder-app:${SEEDER_APP_PORT}
-    # jwt
+      # seeder
+      - SEEDER_URL=http://seeder-app:${SEEDER_APP_PORT}/seed
+      # jwt
       - JWT_SECRET=${JWT_SECRET}
-  
+
   public-app:
     build:
       context: ./public-app/
-      target: production
+      target: development
     volumes:
       - ./public-app/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - ${PUBLIC_APP_PORT}:${PUBLIC_APP_PORT}
+    command: npm run dev
     depends_on:
       - mongodb
       - redis
       - rabbitmq
     environment:
-    # mongo
+      # mongo
       - MONGO_USERNAME=${MONGO_USERNAME}
       - MONGO_PASSWORD=${MONGO_PASSWORD}
       - MONGODB_NAME=${MONGODB_NAME}
       - MONGO_HOST=${MONGO_HOST}
       - MONGO_PORT=${MONGO_PORT}
-    # redis
+      # redis
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
-    # rabbit
+      # rabbit
       - RABBITMQ_USER=${RABBITMQ_USER}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - RABBITMQ_PORT=${RABBITMQ_PORT}
-    # app
+      # app
       - PUBLIC_APP_PORT=${PUBLIC_APP_PORT}
   
   housekeeper-app:
     build:
       context: ./housekeeper-app/
-      target: production
+      target: development
     volumes:
       - ./housekeeper-app/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - ${HOUSEKEEPER_APP_PORT}:${HOUSEKEEPER_APP_PORT}
+    command: npm run dev
     depends_on:
       - mongodb
       - rabbitmq
     environment:
-    # mongo
+      # mongo
       - MONGO_USERNAME=${MONGO_USERNAME}
       - MONGO_PASSWORD=${MONGO_PASSWORD}
       - MONGODB_NAME=${MONGODB_NAME}
       - MONGO_HOST=${MONGO_HOST}
       - MONGO_PORT=${MONGO_PORT}
-    # rabbit
+      # rabbit
       - RABBITMQ_USER=${RABBITMQ_USER}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - RABBITMQ_PORT=${RABBITMQ_PORT}
-    # app
+      # app
       - HOUSEKEEPER_APP_PORT=${HOUSEKEEPER_APP_PORT}
 
   seeder-app:
     build:
       context: ./seeder-app/
-      target: production
+      target: development
     volumes:
       - ./seeder-app/:/usr/src/app
       - ./data/seeder/:/usr/src/app/data
       - /usr/src/app/node_modules
     ports:
       - ${SEEDER_APP_PORT}:${SEEDER_APP_PORT}
+    command: npm run dev
     environment:
       - SEEDER_APP_PORT=${SEEDER_APP_PORT}
 
